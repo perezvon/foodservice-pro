@@ -1,0 +1,35 @@
+
+
+<template name="editEvent">
+  <form>
+  <input type="text" value="{{name}}">
+  <input type="text" value="{{client}}">
+  <input type="text" value="{{accountExec}}">
+  <input type="date" value="{{startDate}}">
+  </form>
+</template>
+
+<template name="newPrep">
+  <form>
+  Restaurant: <select name="clientName">
+    <option value="">select restaurant...</option>
+    <option value="Florian">Florian Bistro</option>
+    <option value="Pedersen">Pedersen Room</option>
+    </select>
+    Date: <input type="date" name="prepDate">
+    {{#with getMenu}}
+    <div> {{#each content in contents}}
+    <ul>
+      <li class="prep-item">{{getMenuItemName content}}: </li>
+    <li class="prep-item">Start<input class="{{content}}" type="number" name="start"></li>
+    <li class="prep-item {{content}}">Sold<input class="{{content}}" type="number" name="sold"></li>
+    <li class="prep-item {{content}}">Remain<input class="{{content}}" type="number" name="remain"></li>
+    <li class="prep-item {{content}}">Need?<input class="{{content}}" type="checkbox" name="need"></li>
+    </ul>
+    {{/each}}
+    </div>
+  <input type="submit" value="Send Prep">
+  
+    {{/with}}
+  </form>
+</template>

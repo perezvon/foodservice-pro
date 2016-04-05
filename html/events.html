@@ -1,0 +1,25 @@
+<template name="events">
+  <table class="table table-bordered table-hover table-responsive">
+      <thead>
+          <tr class="active">
+              <td>Event Name</td>
+              <td>Client</td>
+              <td>Account Exec</td>
+              <td>Date</td>
+          </tr>
+      </thead>
+    <tbody>
+  {{#each listEvents}}
+  
+  <tr class="event-list-view">
+  <td>{{name}}</td>
+  <td>{{client}}</td>
+  <td>{{accountExec}}</td>
+  <td>{{startDate}}</td>
+  </tr>
+  
+  {{/each}}
+  </tbody>
+  </table>
+</template>
+

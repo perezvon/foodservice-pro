@@ -1,0 +1,21 @@
+<template name="newEvent">
+  <form>
+      <div class="form-group">
+      <label for="name">Name: </label>
+      <input type="text" class="form-control" id="name" name="eventName">
+      </div>
+      <div class="form-group">
+      <label for="client">Client: </label>
+      <input type="text" class="form-control" id="client" name="client">
+      </div>
+      <div class="form-group">
+      <label for="exec">Account Executive: </label>
+      <input type="text" class="form-control" id="exec" name="accountExec">
+      </div>
+      <div class="form-group col-md-3">
+      <label for="startDate">Event Date: </label>
+      <input type="date" class="form-control" name="startDate" id="startDate">
+      </div>
+  <button type="submit" class="btn btn-default">Create Event</button>
+  </form>
+</template>
