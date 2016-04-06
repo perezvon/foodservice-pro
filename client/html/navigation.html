@@ -1,7 +1,7 @@
 <template name="navigation">
    <div class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">calihan catering</a>
+        <a class="navbar-brand" href="{{pathFor route='home'}}">your company name</a>
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -12,7 +12,7 @@
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
             <li><a href="{{pathFor route='events'}}">Events</a></li>
-            <li><a href="{{pathFor route='newEvent'}}">New Event</a></li>
+            <li><a href="{{pathFor route='menuItems'}}">Menu Items</a></li>
             <!--<li><a href="{{pathFor route='newPrep'}}">Florian/Pedersen Prep</a></li>-->
         </ul>
         <ul class="nav navbar-nav navbar-right">

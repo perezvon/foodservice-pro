@@ -1,0 +1,30 @@
+<template name="menuBuilder"> 
+<div class="well col-md-6 menu-build-dropzone"></div>
+
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="search-menu-items">Search Menu Items: </label>
+    {{> EasySearch.Input index=menuItemsIndex attributes=inputAttributes}}
+    </div>
+  <table class="table table-bordered table-responsive">
+      <thead>
+          <tr class="active">
+              <td>Image</td>
+              <td>Name</td>
+              <td>Description</td>
+          </tr>
+      </thead>
+    <tbody>
+      <tr></tr>
+   {{#EasySearch.Each index=menuItemsIndex }}
+  <tr class="item-list-view draggable">
+  <td>{{image}}</td>
+  <td>{{name}}</td>
+  <td>{{description}}</td>
+  </tr>
+  {{/EasySearch.Each}}
+  </tbody>
+  </table>
+  <a href="{{pathFor route='newMenuItem'}}" class="btn btn-default" role="button">New Menu Item</a>
+  </div>
+</template>

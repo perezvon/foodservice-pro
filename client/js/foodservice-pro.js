@@ -1,45 +1,5 @@
 
 var currentMenu;
-  Router.configure({
-    layoutTemplate: 'main'
-});
-  
-  Router.route('/',{
-    name: 'home',
-    template: 'home'
-  });
-  
-  Router.route('/events');
-  
-  Router.route('/event/:_id', {
-    name: 'editEvent',
-    template: 'editEvent',
-    data: function() {
-        var currentEvent = this.params._id;
-        return Events.findOne({_id: currentEvent});
-    }
-  });
-  
-    Router.route('/event', {
-    name: 'newEvent',
-    template: 'newEvent'
-    });
-    
-    Router.route('/prep', {
-      name: 'newPrep',
-      template: 'newPrep'
-    });
-    
-
-  Template.events.helpers({
-    'eventsIndex': function (){ return eventsIndex; },
-    'events': function(){
-      return Events.find({}, {sort: {startDate:1}});
-    }, 
-    'inputAttributes': function() {
-      return {'class': 'form-control', 'id': 'search-events'};
-    }
-  });
 
 //reset prep page if user navigates away
 Template.newPrep.rendered = function(){
@@ -91,27 +51,4 @@ Template.newPrep.helpers({
   });
   
   
-      Template.newEvent.events({
-       'submit form': function(e){
-           e.preventDefault();
-           var eventName = $('[name="eventName"]').val();
-           var startDate = $('[name="startDate"]').val();
-           var accountExec = $('[name="accountExec"]').val();
-           var client = $('[name="client"]').val();
-           Events.insert({
-               name: eventName,
-               startDate: startDate,
-               createdDate: new Date(),
-               accountExec: accountExec,
-               client: client
-           });
-           $('[name="eventName"]').val('');
-       }
-    });
-    
-    Template.events.events({
-      'click .event-list-view': function() {
-        Router.go('editEvent', {_id: this._id}); 
-      }
-    });
-
+ 

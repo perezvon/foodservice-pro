@@ -1,0 +1,13 @@
+<template name="editEvent">
+  <form class="form-inline text-center">
+  <input type="text" class="form-control" value="{{name}}">
+  <input type="text" class="form-control" value="{{client}}">
+  <input type="text" class="form-control" value="{{accountExec}}">
+  <input type="date" class="form-control" value="{{startDate}}">
+  </form>
+  <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
+  
+  <div class="collapse" id="menu-build-form">
+    {{> menuBuilder}}
+  </div>
+</template>

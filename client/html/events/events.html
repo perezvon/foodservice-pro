@@ -3,7 +3,7 @@
     <label for="search-events">Search Events: </label>
     {{> EasySearch.Input index=eventsIndex attributes=inputAttributes}}
     </div>
-  <table class="table table-bordered table-hover table-responsive">
+  <table class="table table-bordered table-striped table-hover table-responsive">
       <thead>
           <tr class="active">
               <td>Event Name</td>
@@ -13,6 +13,7 @@
           </tr>
       </thead>
     <tbody>
+      <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=eventsIndex }}
   <tr class="event-list-view">
   <td>{{name}}</td>
@@ -23,5 +24,6 @@
   {{/EasySearch.Each}}
   </tbody>
   </table>
+  <a href="{{pathFor route='newEvent'}}" class="btn btn-default" role="button">New Event</a>
 </template>
 

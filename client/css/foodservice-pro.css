@@ -1,3 +1,7 @@
-.event-list-view {
+.event-list-view, .item-list-view {
     cursor: pointer;
+}
+
+thead {
+    font-weight: bold;
 }
