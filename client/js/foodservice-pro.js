@@ -1,12 +1,5 @@
-Events = new Mongo.Collection('events');
-Menus = new Mongo.Collection('menus');
-MenuItems = new Mongo.Collection('menuItems');
-Preps = new Mongo.Collection('preps');
 
 var currentMenu;
-
-if (Meteor.isClient) {
-  
   Router.configure({
     layoutTemplate: 'main'
 });
@@ -39,8 +32,12 @@ if (Meteor.isClient) {
     
 
   Template.events.helpers({
-    'listEvents': function(){
+    'eventsIndex': function (){ return eventsIndex; },
+    'events': function(){
       return Events.find({}, {sort: {startDate:1}});
+    }, 
+    'inputAttributes': function() {
+      return {'class': 'form-control', 'id': 'search-events'};
     }
   });
 
@@ -117,5 +114,4 @@ Template.newPrep.helpers({
         Router.go('editEvent', {_id: this._id}); 
       }
     });
-}
 

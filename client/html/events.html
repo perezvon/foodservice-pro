@@ -1,4 +1,8 @@
-<template name="events">
+<template name="events"> 
+  <div class="form-group">
+    <label for="search-events">Search Events: </label>
+    {{> EasySearch.Input index=eventsIndex attributes=inputAttributes}}
+    </div>
   <table class="table table-bordered table-hover table-responsive">
       <thead>
           <tr class="active">
@@ -9,16 +13,14 @@
           </tr>
       </thead>
     <tbody>
-  {{#each listEvents}}
-  
+   {{#EasySearch.Each index=eventsIndex }}
   <tr class="event-list-view">
   <td>{{name}}</td>
   <td>{{client}}</td>
   <td>{{accountExec}}</td>
   <td>{{startDate}}</td>
   </tr>
-  
-  {{/each}}
+  {{/EasySearch.Each}}
   </tbody>
   </table>
 </template>
