@@ -1,5 +1,30 @@
  Template.menuBuilder.onRendered(function() {
-     $('.draggable').draggable();
+     $('#menu-build-dropzone tbody').sortable({
+        appendTo: 'parent',
+        helper: 'clone'
+     }).disableSelection();
+     
+     $('#menu-build-items tr').draggable({
+        helper: 'clone',
+        distance: 10,
+        start: function(e, ui){
+            var dragging = Blaze.getData(this)._id;
+            Session.set('draggingMenuItem', dragging);
+        }
+     }).disableSelection();
+     
+     $('#menu-build-dropzone').droppable({
+         accept: '.drag-menu-item',
+         drop: function(e, ui){
+             $('#menu-build-dropzone table tr:last').after('<tr>' + ui.draggable.html() + '</tr>');
+             var dragging = Session.get('draggingMenuItem');
+            //erroring: need parent of parent -- var currentMenu = Template.parentData(0)._id; 
+            var currentMenu = '';
+            Meteor.call('updateEventMenu', currentMenu, dragging);
+             ui.draggable.remove();
+             ui.helper.remove();
+         }
+     });
  });
  
  Template.menuItems.helpers({

@@ -1,12 +1,18 @@
 <template name="menuBuilder"> 
-<div class="well col-md-6 menu-build-dropzone"></div>
+<div class="well col-md-6" id="menu-build-dropzone">
+  <table class="table table-bordered">
+    <tbody>
+      <tr></tr>
+    </tbody>
+  </table>
+</div>
 
 <div class="col-md-6">
   <div class="form-group">
     <label for="search-menu-items">Search Menu Items: </label>
     {{> EasySearch.Input index=menuItemsIndex attributes=inputAttributes}}
     </div>
-  <table class="table table-bordered table-responsive">
+  <table class="table table-bordered table-responsive" id="menu-build-items">
       <thead>
           <tr class="active">
               <td>Image</td>
@@ -17,7 +23,7 @@
     <tbody>
       <tr></tr>
    {{#EasySearch.Each index=menuItemsIndex }}
-  <tr class="item-list-view draggable">
+  <tr class="drag-menu-item" id="{{_id}}">
   <td>{{image}}</td>
   <td>{{name}}</td>
   <td>{{description}}</td>

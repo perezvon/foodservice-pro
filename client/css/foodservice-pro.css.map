@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,iCAAkC;EAC9B,MAAM,EAAE,OAAO;;AAGnB,oBAAqB;EACjB,MAAM,EAAE,IAAI;EACZ,MAAM,EAAE,YAAY;EACpB,2BAAS;IACL,MAAM,EAAE,QAAQ;IAChB,MAAM,EAAE,gBAAgB;;AAKhC,KAAM;EACF,WAAW,EAAE,IAAI",
+"sources": ["foodservice-pro.scss"],
+"names": [],
+"file": "foodservice-pro.css"
+}

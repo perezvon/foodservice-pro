@@ -1,0 +1,17 @@
+.event-list-view, .item-list-view {
+    cursor: pointer;
+}
+
+#menu-build-items tr {
+    cursor: grab;
+    cursor: -webkit-grab;
+    &:active {
+        cursor: grabbing;
+        cursor: -webkit-grabbing;
+    }
+    
+}
+
+thead {
+    font-weight: bold;
+}
