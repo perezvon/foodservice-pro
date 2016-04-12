@@ -1,4 +1,5 @@
 <template name="editEvent">
+  {{#if Template.subscriptionsReady}}
   <form class="form-inline text-center">
   <input type="text" class="form-control" value="{{name}}">
   <input type="text" class="form-control" value="{{client}}">
@@ -10,4 +11,7 @@
   <div class="collapse" id="menu-build-form">
     {{> menuBuilder}}
   </div>
+  {{else}}
+  {{> loading}}
+  {{/if}}
 </template>

@@ -1,4 +1,5 @@
 <template name="events"> 
+{{#if Template.subscriptionsReady}}
   <div class="form-group">
     <label for="search-events">Search Events: </label>
     {{> EasySearch.Input index=eventsIndex attributes=inputAttributes}}
@@ -25,5 +26,8 @@
   </tbody>
   </table>
   <a href="{{pathFor route='newEvent'}}" class="btn btn-default" role="button">New Event</a>
+  {{else}}
+  {{> loading}}
+  {{/if}}
 </template>
 

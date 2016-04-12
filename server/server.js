@@ -1,5 +1,19 @@
-updateEventMenu = function (menu, data) {
+Meteor.publish('events', function (){
+  return Events.find();
+});
+
+Meteor.publish('menus', function (){
+  return Menus.find();
+});
+
+Meteor.publish('menuItems', function (){
+  return MenuItems.find();
+});
+
+Meteor.methods({
+addMenuItemToEvent: function (event, data) {
     var menuItem = MenuItems.findOne({_id: data});
     console.log(menuItem);
-  //Menus.upsert({_id: menu}, {$addToSet: {menuItem}});  
-};
+  Events.update({_id: event}, {$addToSet: {menu: menuItem}});  
+}
+});

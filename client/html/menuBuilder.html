@@ -1,8 +1,25 @@
 <template name="menuBuilder"> 
 <div class="well col-md-6" id="menu-build-dropzone">
   <table class="table table-bordered">
+    <thead>
+          <tr class="active">
+              <td>Image</td>
+              <td>Name</td>
+              <td>Description</td>
+              <td>Cost</td>
+              <td>Price</td>
+          </tr>
+      </thead>
     <tbody>
-      <tr></tr>
+      {{#each getEventMenu}}
+      <tr class="menu-item">
+        <td>{{image}}</td>
+        <td>{{name}}</td>
+        <td>{{description}}</td>
+        <td>{{cost}}</td>
+        <td>{{price}}</td>
+      </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
@@ -22,13 +39,17 @@
       </thead>
     <tbody>
       <tr></tr>
+         {{#unless inCurrentMenu}}
    {{#EasySearch.Each index=menuItemsIndex }}
+
   <tr class="drag-menu-item" id="{{_id}}">
   <td>{{image}}</td>
   <td>{{name}}</td>
   <td>{{description}}</td>
   </tr>
   {{/EasySearch.Each}}
+
+  {{/unless}}
   </tbody>
   </table>
   <a href="{{pathFor route='newMenuItem'}}" class="btn btn-default" role="button">New Menu Item</a>
