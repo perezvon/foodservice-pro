@@ -13,7 +13,12 @@ Meteor.publish('menuItems', function (){
 Meteor.methods({
 addMenuItemToEvent: function (event, data) {
     var menuItem = MenuItems.findOne({_id: data});
-    console.log(menuItem);
+    var hasMenu = Events.findOne({_id: event}).menu;
+    menuItem.rank = (hasMenu ? hasMenu.length + 1 : 1);
   Events.update({_id: event}, {$addToSet: {menu: menuItem}});  
+},
+
+updateEvent: function (event, data) {
+  Events.update(event, data);
 }
 });

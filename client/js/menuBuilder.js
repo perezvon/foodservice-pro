@@ -2,10 +2,31 @@ Template.menuBuilder.onRendered(function() {
      Session.set('currentDataContext', Template.currentData());
      
      $('#menu-build-dropzone tbody').sortable({
-        appendTo: 'parent',
+        //appendTo: 'parent',
         helper: 'clone',
+        start: function(e, ui){
+          var dragging = ui.item.get(0).id;
+          Session.set('draggingMenuItem', dragging);
+        },
         update: function(e, ui){
-            console.log(ui);
+            var el = ui.item.get(0);
+            var before = ui.item.prev().get(0);
+            var after = ui.item.next().get(0);
+            var dragging = Session.get('draggingMenuItem');
+            var currentEvent = Session.get('currentDataContext')._id;
+            var newRank;
+          if(!before) {
+            newRank = Blaze.getData(after).rank - 1;
+          } else if(!after) {
+            newRank = Blaze.getData(before).rank + 1;
+          }
+          else {
+            //else take the average of the two ranks of the previous
+            // and next elements
+            newRank = (Blaze.getData(after).rank +
+                       Blaze.getData(before).rank)/2;
+          }
+        Meteor.call('updateEvent', {'_id': currentEvent, 'menu._id': dragging}, {$set: {'menu.$.rank': newRank}});
         }
      }).disableSelection();
     
@@ -38,6 +59,13 @@ Template.menuBuilder.onRendered(function() {
     'getEventMenu': function() {
         var currentEvent = Session.get('currentDataContext')._id; 
         var menu = Events.findOne(currentEvent).menu;
+        
+        if (menu) {
+            menu = menu.sort(function(a,b){
+            return a.rank - b.rank;
+        });
         return menu;
+    }
+        else return false;
     }
   });
