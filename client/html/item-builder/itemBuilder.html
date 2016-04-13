@@ -1,0 +1,54 @@
+<template name="itemBuilder"> 
+<div class="well col-md-6" id="item-build-dropzone">
+  <table class="table table-bordered">
+    <thead>
+          <tr class="active">
+              <td>Name</td>
+              <td>Description</td>
+              <td>Unit</td>
+              <td>Cost</td>
+          </tr>
+      </thead>
+    <tbody>
+      {{#each getMenuItemComponents}}
+      <tr class="component remove-item" id="{{_id}}">
+        <td>{{name}}</td>
+        <td>{{description}}</td>
+        <td>{{unit}}</td>
+        <td>{{cost}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<div class="col-md-6">
+  <div class="form-group">
+    <label for="search-components">Search Components: </label>
+    {{> EasySearch.Input index=componentsIndex attributes=inputAttributes}}
+    </div>
+  <table class="table table-bordered table-responsive" id="item-build-components">
+      <thead>
+          <tr class="active">
+              <td>Name</td>
+              <td>Description</td>
+              <td>Unit</td>
+              <td>Cost</td>
+          </tr>
+      </thead>
+    <tbody>
+      <tr></tr>
+   {{#EasySearch.Each index=componentsIndex }}
+
+  <tr class="drag-component" id="{{_id}}">
+  <td>{{name}}</td>
+  <td>{{description}}</td>
+  <td>{{unit}}</td>
+  <td>{{cost}}</td>
+  </tr>
+  {{/EasySearch.Each}}
+
+  </tbody>
+  </table>
+  <a href="{{pathFor route='newComponent'}}" class="btn btn-default" role="button">New Component</a>
+  </div>
+</template>

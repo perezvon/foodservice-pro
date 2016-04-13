@@ -10,6 +10,10 @@ Meteor.publish('menuItems', function (){
   return MenuItems.find();
 });
 
+Meteor.publish('components', function (){
+  return Components.find();
+});
+
 Meteor.publish('tags', function (){
   return Tags.find();
 });
@@ -39,5 +43,21 @@ newMenuItem: function(data){
 
 updateMenuItem: function(item, data){
   MenuItems.update(item, data);
+},
+
+newComponent: function(data){
+  Components.insert(data);
+},
+
+updateComponent: function(item, data){
+  Components.update(item, data);
+},
+
+addComponentToMenuItem: function(item, data){
+    var component = Components.findOne({_id: data});
+    var hasComponents = MenuItems.findOne({_id: item}).components;
+    component.rank = (hasComponents ? hasComponents.length + 1 : 1);
+  MenuItems.update({_id: item}, {$addToSet: {components: component}});  
+
 }
 });

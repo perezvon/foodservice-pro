@@ -1,6 +1,6 @@
 ## catering software v0.1
 
-coming soon
+Using Bootstrap and the power of Meteor to create catering software for foodservice operations.
 
 ## dependencies
 

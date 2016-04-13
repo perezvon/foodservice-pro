@@ -1,0 +1,33 @@
+<template name="components"> 
+{{#if Template.subscriptionsReady}}
+  <div class="form-group">
+    <label for="search-events">Search Components: </label>
+    {{> EasySearch.Input index=componentsIndex attributes=inputAttributes}}
+    </div>
+  <table class="table table-bordered table-striped table-hover table-responsive">
+      <thead>
+          <tr class="active">
+              <td>Name</td>
+              <td>Description</td>
+              <td>Measurement Unit</td>
+              <td>Cost</td>
+          </tr>
+      </thead>
+    <tbody>
+      <tr></tr> <!--for :nth-child table striping -->
+   {{#EasySearch.Each index=componentsIndex }}
+  <tr class="component-list-view">
+  <td>{{name}}</td>
+  <td>{{description}}</td>
+  <td>{{unit}}</td>
+  <td>{{cost}}</td>
+  </tr>
+  {{/EasySearch.Each}}
+  </tbody>
+  </table>
+  <a href="{{pathFor route='newComponent'}}" class="btn btn-default" role="button">New Component</a>
+  {{else}}
+  {{> loading}}
+  {{/if}}
+</template>
+

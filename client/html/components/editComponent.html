@@ -1,0 +1,13 @@
+<template name="editComponent">
+  {{#if Template.subscriptionsReady}}
+  <form class="form-inline text-center">
+  <input type="text" class="form-control" id="name" value="{{name}}">
+  <input type="text" class="form-control" id="description" value="{{description}}">
+  <input type="text" class="form-control" id="unit" value="{{unit}}">
+  <input type="number" class="form-control" id="cost" value="{{cost}}">
+ 
+  </form>
+  {{else}}
+  {{> loading}}
+  {{/if}}
+</template>

@@ -5,6 +5,10 @@
   <input type="text" class="form-control" id="description" value="{{description}}">
   <input type="text" class="form-control" id="type" value="{{type}}">
   <input type="text" class="form-control" id="tags" value="{{tags}}">
-  <input type="text" class="form-control" id="image" value="{{image}}">
   </form>
+  <button class="btn btn-default" id="build-item" data-toggle="collapse" data-target="#item-build-form" aria-expanded="false" aria-controls="item-build-form">Menu Item Components</button>
+  
+  <div class="collapse" id="item-build-form">
+    {{> itemBuilder}}
+  </div>
 </template>

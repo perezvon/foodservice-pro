@@ -1,7 +1,9 @@
 Template.menuBuilder.onRendered(function() {
      Session.set('currentDataContext', Template.currentData());
      
-     $('#menu-build-dropzone tbody').sortable({
+     
+     
+    $('#menu-build-dropzone tbody').sortable({
         helper: 'clone',
         start: function(e, ui){
           var dragging = ui.item.get(0).id;
@@ -26,7 +28,7 @@ Template.menuBuilder.onRendered(function() {
           }
         Meteor.call('updateEvent', {'_id': currentEvent, 'menu._id': dragging}, {$set: {'menu.$.rank': newRank}});
         }
-     }).disableSelection();
+     }).editableTableWidget(); //sortable && editable doesn't work -- why?
   
    //disabling for now -- removes menu item even when dropping onto #menu-build-dropzone tbody  
    

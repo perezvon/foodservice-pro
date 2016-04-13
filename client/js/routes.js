@@ -41,11 +41,34 @@
     name: 'editMenuItem',
     template: 'editMenuItem',
     waitOn: function() {
-      return [this.subscribe('menuItems'), this.subscribe('tags')];
+      return [this.subscribe('menuItems'), this.subscribe('tags'), this.subscribe('components')];
     },
     data: function() {
         var currentItem = this.params._id;
         return MenuItems.findOne({_id: currentItem});
+    }
+  });
+  
+    Router.route('/components', {
+      waitOn: function() {
+      return this.subscribe('components');
+      }
+    });
+    
+    Router.route('/component', {
+    name: 'newComponent',
+    template: 'newComponent'
+    });
+    
+    Router.route('/component/:_id', {
+    name: 'editComponent',
+    template: 'editComponent',
+    waitOn: function() {
+      return this.subscribe('components');
+    },
+    data: function() {
+        var currentComponent = this.params._id;
+        return Components.findOne({_id: currentComponent});
     }
   });
     
