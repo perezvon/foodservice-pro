@@ -6,6 +6,11 @@
     }
   });
   
+Template.menuItems.events({
+  'click .item-list-view': function() {
+        Router.go('editMenuItem', {_id: this._id}); 
+      }  
+});
  
 Template.newMenuItem.events({
        'submit form': function(e){
@@ -18,19 +23,30 @@ Template.newMenuItem.events({
            var price = $('#price').val();
            var description = $('#description').val();
    
-           MenuItems.insert({
+           Meteor.call('newMenuItem', {
                name: name,
                type: type,
                tags: tags,
                description: description,
                cost: cost,
                price: price,
-               image: image,
-               createdDate: new Date()
+               image: image
            });
-       },
-
-      'click .item-list-view': function() {
-        Router.go('editMenuItem', {_id: this._id}); 
-      }
+       }
     });
+    
+Template.editMenuItem.events({
+        'keyup .form-control': function(event){
+    if(event.which == 13 || event.which == 27){
+        $(event.target).blur();
+    } else {
+        var currentMenuItem = this._id;
+        var updateField = event.target.id;
+        var updateVal = $(event.target).val();
+        var update = {};
+        update[updateField] = updateVal;
+        console.log(update);
+       Meteor.call('updateMenuItem', { _id: currentMenuItem }, {$set: update });
+        }
+    }
+});

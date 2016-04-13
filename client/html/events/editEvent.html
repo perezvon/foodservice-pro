@@ -1,10 +1,12 @@
 <template name="editEvent">
   {{#if Template.subscriptionsReady}}
   <form class="form-inline text-center">
-  <input type="text" class="form-control" value="{{name}}">
-  <input type="text" class="form-control" value="{{client}}">
-  <input type="text" class="form-control" value="{{accountExec}}">
-  <input type="date" class="form-control" value="{{startDate}}">
+  <input type="text" class="form-control" id="name" value="{{name}}">
+  <input type="text" class="form-control" id="client" value="{{client}}">
+  <input type="text" class="form-control" id="accountExec" value="{{accountExec}}">
+  <input type="date" class="form-control" id="startDate" value="{{startDate}}">
+  <input type="number" class="form-control" id="guestCount" value="{{guestCount}}">
+ 
   </form>
   <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
   

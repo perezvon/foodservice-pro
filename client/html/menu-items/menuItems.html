@@ -1,4 +1,5 @@
 <template name="menuItems"> 
+{{#if Template.subscriptionsReady}}
   <div class="form-group">
     <label for="search-menu-items">Search Menu Items: </label>
     {{> EasySearch.Input index=menuItemsIndex attributes=inputAttributes}}
@@ -27,4 +28,7 @@
   </tbody>
   </table>
   <a href="{{pathFor route='newMenuItem'}}" class="btn btn-default" role="button">New Menu Item</a>
+    {{else}}
+  {{> loading}}
+  {{/if}}
 </template>

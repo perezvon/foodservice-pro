@@ -8,7 +8,6 @@ Template.menuBuilder.onRendered(function() {
           Session.set('draggingMenuItem', dragging);
         },
         update: function(e, ui){
-            var el = ui.item.get(0);
             var before = ui.item.prev().get(0);
             var after = ui.item.next().get(0);
             var dragging = Session.get('draggingMenuItem');

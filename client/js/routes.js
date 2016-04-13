@@ -30,6 +30,9 @@
     Router.route('/menuItems');
     
     Router.route('/menuItem', {
+      waitOn: function() {
+        return this.subscribe('tags');
+      },
     name: 'newMenuItem',
     template: 'newMenuItem'
     });
@@ -38,7 +41,7 @@
     name: 'editMenuItem',
     template: 'editMenuItem',
     waitOn: function() {
-      return this.subscribe('menuItems');
+      return [this.subscribe('menuItems'), this.subscribe('tags')];
     },
     data: function() {
         var currentItem = this.params._id;

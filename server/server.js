@@ -10,7 +10,17 @@ Meteor.publish('menuItems', function (){
   return MenuItems.find();
 });
 
+Meteor.publish('tags', function (){
+  return Tags.find();
+});
+
 Meteor.methods({
+
+newEvent: function(data){
+  data.createdDate = new Date();
+  Events.insert(data);
+}, 
+  
 addMenuItemToEvent: function (event, data) {
     var menuItem = MenuItems.findOne({_id: data});
     var hasMenu = Events.findOne({_id: event}).menu;
@@ -20,5 +30,14 @@ addMenuItemToEvent: function (event, data) {
 
 updateEvent: function (event, data) {
   Events.update(event, data);
+},
+
+newMenuItem: function(data){
+  data.createdDate = new Date();
+  MenuItems.insert(data);
+},
+
+updateMenuItem: function(item, data){
+  MenuItems.update(item, data);
 }
 });
