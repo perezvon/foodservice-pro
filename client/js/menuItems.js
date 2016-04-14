@@ -36,17 +36,19 @@ Template.newMenuItem.events({
     });
     
 Template.editMenuItem.events({
-        'keyup .form-control': function(event){
-    if(event.which == 13 || event.which == 27){
-        $(event.target).blur();
-    } else {
+        'keyup .form-control': function(e){
+    if(e.which == 13 || e.which == 27){
+        $(e.target).blur();
+    }
+    }, 
+    
+    'blur .form-control': function(e){
         var currentMenuItem = this._id;
-        var updateField = event.target.id;
-        var updateVal = $(event.target).val();
+        var updateField = e.target.id;
+        var updateVal = $(e.target).val();
         var update = {};
         update[updateField] = updateVal;
         console.log(update);
        Meteor.call('updateMenuItem', { _id: currentMenuItem }, {$set: update });
         }
-    }
 });

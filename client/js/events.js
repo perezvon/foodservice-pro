@@ -11,25 +11,21 @@ Template.events.helpers({
 Template.newEvent.events({
     'submit form': function(e){
         e.preventDefault();
-        var eventName = $('[name="eventName"]').val();
-        var startDate = $('[name="startDate"]').val();
-        var accountExec = $('[name="accountExec"]').val();
-        var client = $('[name="client"]').val();
-        var guestCount = $('[name="guestCount"]').val();
-           Meteor.call('newEvent', {
-               name: eventName,
-               startDate: startDate,
-               accountExec: accountExec,
-               client: client,
-               guestCount: guestCount
-           }, function(error){
+        var inputs;
+        var data = {};
+        $('form').each(function(){
+            inputs = ($(this).find(':input'));
+        });
+        for (var i=0; i< inputs.length; i++){
+            data[inputs.get([i]).id] = inputs.get([i]).value;
+        }
+        Meteor.call('newEvent', data, function(error){
                if (error) Bert.alert(error.reason, 'danger');
                else {
                    Bert.alert('Event created.', 'success');
                    Router.go('events');
                }
            });
-        $('[name="eventName"]').val('');
     }
 });
     
@@ -44,17 +40,22 @@ Template.editEvent.events({
         e.preventDefault();
     },
     
-    'keyup .form-control': function(event){
-    if(event.which == 13 || event.which == 27){
-        $(event.target).blur();
-    } else {
+        'keyup .form-control': function(e){
+    if(e.which == 13 || e.which == 27){
+        $(e.target).blur();
+    }
+            
+        },
+        
+        'blur .form-control': function(e){
         var currentEvent = this._id;
-        var updateField = event.target.id;
-        var updateVal = $(event.target).val();
+        var updateField = e.target.id;
+        var updateVal = $(e.target).val();
         var update = {};
         update[updateField] = updateVal;
         console.log(update);
        Meteor.call('updateEvent', { _id: currentEvent }, {$set: update });
-    }
-}
+        }
 });
+
+

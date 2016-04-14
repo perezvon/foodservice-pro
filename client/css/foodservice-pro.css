@@ -1,4 +1,12 @@
-.event-list-view, .item-list-view {
+.background {
+  background: url(http://s29.postimg.org/itr7woag7/heatherparkerphotography_132.jpg) no-repeat center;
+  background-size: cover;
+  text-align: center;
+  padding-top: 50px;
+  color: #fff;
+  height: 800px; }
+
+.event-list-view, .item-list-view, .component-list-view {
   cursor: pointer; }
 
 #menu-build-items tr {

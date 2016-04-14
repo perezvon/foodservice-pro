@@ -28,17 +28,21 @@ Template.newComponent.events({
        }
     });
     
+
 Template.editComponent.events({
-        'keyup .form-control': function(event){
-    if(event.which == 13 || event.which == 27){
-        $(event.target).blur();
-    } else {
+        'keyup .form-control': function(e){
+    if(e.which == 13 || e.which == 27){
+        $(e.target).blur();
+    }
+    }, 
+    
+    'blur .form-control': function(e){
         var currentComponent = this._id;
-        var updateField = event.target.id;
-        var updateVal = $(event.target).val();
+        var updateField = e.target.id;
+        var updateVal = $(e.target).val();
         var update = {};
         update[updateField] = updateVal;
+        console.log(update);
        Meteor.call('updateComponent', { _id: currentComponent }, {$set: update });
         }
-    }
 });

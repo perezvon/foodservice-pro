@@ -1,28 +1,50 @@
 <template name="newEvent">
   
-  <div class="col-md-6">
+  
   <form>
-      <div class="form-group">
-      <label for="name">Name: </label>
-      <input type="text" class="form-control" id="name" name="eventName">
+    <div class="row">
+      <div class="form-group col-md-4">
+      <label for="name">Event Name: </label>
+      <input type="text" class="form-control" id="name">
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-4">
       <label for="client">Client: </label>
-      <input type="text" class="form-control" id="client" name="client">
+      <input type="text" class="form-control" id="client">
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-4">
       <label for="exec">Account Executive: </label>
-      <input type="text" class="form-control" id="exec" name="accountExec">
+      <input type="text" class="form-control" id="accountExec">
       </div>
-      <div class="form-group">
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-2">
       <label for="startDate">Event Date: </label>
-      <input type="date" class="form-control" name="startDate" id="startDate">
+      <input type="date" class="form-control" id="startDate">
       </div>
-      <div class="form-group">
+      <div class="form-group col-md-2">
+      <label for="startTime">Start Time: </label>
+      <input type="time" class="form-control" id="startTime">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="endTime">End Time: </label>
+      <input type="time" class="form-control" id="endTime">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="venue">Venue: </label>
+      <input type="text" class="form-control" id="venue">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="address">Address: </label>
+      <input type="text" class="form-control" id="address">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-1">
       <label for="guestCount">Guest Count: </label>
-      <input type="number" class="form-control" name="guestCount" id="guestCount">
+      <input type="number" class="form-control" id="guestCount">
       </div>
+    </div>
   <button type="submit" class="btn btn-default">Create Event</button>
   </form>
-  </div>
 </template>

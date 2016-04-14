@@ -30,6 +30,7 @@ Template.menuBuilder.onRendered(function() {
         }
      }).editableTableWidget(); //sortable && editable doesn't work -- why?
   
+  
    //disabling for now -- removes menu item even when dropping onto #menu-build-dropzone tbody  
    
  /*  $('body:not(#menu-build-dropzone tbody)').droppable({

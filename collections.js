@@ -7,7 +7,7 @@ Tags = new Mongo.Collection('tags');
 
   eventsIndex = new EasySearch.Index({
     collection: Events,
-    fields: ['name'],
+    fields: ['name', 'client'],
     engine: new EasySearch.Minimongo({
       sort: () => ['startDate']  
     })
