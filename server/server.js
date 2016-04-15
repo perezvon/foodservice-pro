@@ -7,7 +7,7 @@ Meteor.publish('menus', function (){
 });
 
 Meteor.publish('menuItems', function (){
-  return MenuItems.find();
+  return MenuItems.find({status: {$ne: 'deleted'}});
 });
 
 Meteor.publish('components', function (){
@@ -29,6 +29,7 @@ addMenuItemToEvent: function (event, data) {
     var menuItem = MenuItems.findOne({_id: data});
     var hasMenu = Events.findOne({_id: event}).menu;
     menuItem.rank = (hasMenu ? hasMenu.length + 1 : 1);
+    menuItem.quantity = Events.findOne({_id: event}).guestCount;
   Events.update({_id: event}, {$addToSet: {menu: menuItem}});  
 },
 

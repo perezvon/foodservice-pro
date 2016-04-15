@@ -1,8 +1,10 @@
 <template name="events"> 
 {{#if Template.subscriptionsReady}}
-  <div class="form-group">
+<div class="row">
+  <div class="form-group col-md-6">
     <label for="search-events">Search Events: </label>
     {{> EasySearch.Input index=eventsIndex attributes=inputAttributes}}
+    </div>
     </div>
   <table class="table table-bordered table-striped table-hover table-responsive">
       <thead>
@@ -18,10 +20,10 @@
       <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=eventsIndex }}
   <tr class="event-list-view">
-  <td>{{name}}</td>
+  <td>{{title}}</td>
   <td>{{client}}</td>
   <td>{{accountExec}}</td>
-  <td>{{startDate}}</td>
+  <td>{{start}}</td>
   <td>{{guestCount}}</td>
   </tr>
   {{/EasySearch.Each}}

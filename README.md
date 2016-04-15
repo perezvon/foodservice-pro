@@ -10,3 +10,4 @@ Using Bootstrap and the power of Meteor to create catering software for foodserv
 `ian:accounts-ui-bootstrap-3`  
 `themeteorchef:bert`  
 `momentjs:moment`  
+`fullcalendar: fullcalendar`  

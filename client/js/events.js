@@ -53,7 +53,6 @@ Template.editEvent.events({
         var updateVal = $(e.target).val();
         var update = {};
         update[updateField] = updateVal;
-        console.log(update);
        Meteor.call('updateEvent', { _id: currentEvent }, {$set: update });
         }
 });

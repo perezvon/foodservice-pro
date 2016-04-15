@@ -50,5 +50,18 @@ Template.editMenuItem.events({
         update[updateField] = updateVal;
         console.log(update);
        Meteor.call('updateMenuItem', { _id: currentMenuItem }, {$set: update });
+        },
+        
+        'click .delete': function(e){
+            var currentMenuItem = this._id;
+            var update = {'status': 'deleted'};
+            console.log(update);
+            Meteor.call('updateMenuItem', {_id: currentMenuItem}, {$set: update}, 
+                function(err, res){
+                if (err)
+                    Bert.alert(err.reason, 'danger');
+                else 
+                    Router.go('menuItems');
+            });
         }
 });

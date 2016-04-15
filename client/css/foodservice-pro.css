@@ -1,18 +1,10 @@
-.background {
-  background: url(http://s29.postimg.org/itr7woag7/heatherparkerphotography_132.jpg) no-repeat center;
-  background-size: cover;
-  text-align: center;
-  padding-top: 50px;
-  color: #fff;
-  height: 800px; }
-
 .event-list-view, .item-list-view, .component-list-view {
   cursor: pointer; }
 
-#menu-build-items tr {
+#menu-build-items tr, #menu-build-dropzone tr {
   cursor: grab;
   cursor: -webkit-grab; }
-  #menu-build-items tr:active {
+  #menu-build-items tr:active, #menu-build-dropzone tr:active {
     cursor: grabbing;
     cursor: -webkit-grabbing; }
 

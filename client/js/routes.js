@@ -5,7 +5,10 @@
   
   Router.route('/',{
     name: 'home',
-    template: 'home'
+    template: 'home',
+    waitOn: function() {
+      return this.subscribe('events');
+    }
   });
   
   Router.route('/events');

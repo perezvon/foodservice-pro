@@ -1,8 +1,10 @@
 <template name="menuItems"> 
 {{#if Template.subscriptionsReady}}
-  <div class="form-group">
+ <div class="row">
+  <div class="form-group col-md-6">
     <label for="search-menu-items">Search Menu Items: </label>
     {{> EasySearch.Input index=menuItemsIndex attributes=inputAttributes}}
+    </div>
     </div>
   <table class="table table-bordered table-striped table-hover table-responsive">
       <thead>

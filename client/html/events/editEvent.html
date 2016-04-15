@@ -1,19 +1,60 @@
 <template name="editEvent">
   {{#if Template.subscriptionsReady}}
-  <form class="form-inline text-center">
-  <input type="text" class="form-control" id="name" value="{{name}}">
-  <input type="text" class="form-control" id="client" value="{{client}}">
-  <input type="text" class="form-control" id="accountExec" value="{{accountExec}}">
-  <input type="date" class="form-control" id="startDate" value="{{startDate}}">
-  <input type="number" class="form-control" id="guestCount" value="{{guestCount}}">
- 
-  </form>
-  <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
-  
-  <div class="collapse" id="menu-build-form">
+  <form>
+    <div class="row">
+      <div class="form-group col-md-4">
+      <label for="title">Event Name: </label>
+      <input type="text" class="form-control" id="title" value="{{title}}">
+      </div>
+      <div class="form-group col-md-4">
+      <label for="client">Client: </label>
+      <input type="text" class="form-control" id="client" value="{{client}}">
+      </div>
+      <div class="form-group col-md-4">
+      <label for="exec">Account Executive: </label>
+      <input type="text" class="form-control" id="accountExec" value="{{accountExec}}">
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="form-group col-md-2">
+      <label for="start">Event Date: </label>
+      <input type="date" class="form-control" id="start" value="{{start}}">
+      </div>
+     <div class="form-group col-md-2">
+      <label for="type">Event Type: </label>
+      <input type="text" class="form-control" id="type" value="{{type}}">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="startTime">Start Time: </label>
+      <input type="time" class="form-control" id="startTime" value="{{startTime}}">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="endTime">End Time: </label>
+      <input type="time" class="form-control" id="endTime" value="{{endTime}}">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="venue">Venue: </label>
+      <input type="text" class="form-control" id="venue" value="{{venue}}">
+      </div>
+      <div class="form-group col-md-2">
+      <label for="address">Address: </label>
+      <input type="text" class="form-control" id="address" value="{{address}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-1">
+      <label for="guestCount">Guest Count: </label>
+      <input type="number" class="form-control" id="guestCount" value="{{guestCount}}">
+      </div>
+    </div>
+    </form>
+    
+    <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
+    <div class="collapse" id="menu-build-form">
     {{> menuBuilder}}
-  </div>
-  {{else}}
-  {{> loading}}
-  {{/if}}
-</template>
+    </div>
+    {{else}}
+    {{> loading}}
+    {{/if}}
+    </template>

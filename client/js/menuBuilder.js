@@ -33,7 +33,7 @@ Template.menuBuilder.onRendered(function() {
   
    //disabling for now -- removes menu item even when dropping onto #menu-build-dropzone tbody  
    
- /*  $('body:not(#menu-build-dropzone tbody)').droppable({
+   $('body:not(#menu-build-dropzone tbody)').droppable({
         accept: '.remove-item',
          drop: function(e, ui){
              var dragging = Session.get('draggingMenuItem');
@@ -41,7 +41,7 @@ Template.menuBuilder.onRendered(function() {
              //remove the dragged element from db
              Meteor.call('updateEvent', {_id: currentEvent}, {$pull: {menu: {_id: dragging}}});
          }
-    }); */
+    }); 
     
      $('#menu-build-items tr').draggable({
         helper: 'clone',

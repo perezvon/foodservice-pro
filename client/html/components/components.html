@@ -1,8 +1,10 @@
 <template name="components"> 
 {{#if Template.subscriptionsReady}}
-  <div class="form-group">
+<div class="row">
+  <div class="form-group col-md-6">
     <label for="search-events">Search Components: </label>
     {{> EasySearch.Input index=componentsIndex attributes=inputAttributes}}
+    </div>
     </div>
   <table class="table table-bordered table-striped table-hover table-responsive">
       <thead>
