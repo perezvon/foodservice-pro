@@ -75,6 +75,12 @@
     }
   });
     
+    Router.route('/orderGuide', {
+      waitOn: function() {
+      return this.subscribe('ordering');
+      }
+    });
+    
     Router.route('/prep', {
       name: 'newPrep',
       template: 'newPrep'

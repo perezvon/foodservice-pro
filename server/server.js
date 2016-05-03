@@ -14,6 +14,10 @@ Meteor.publish('components', function (){
   return Components.find();
 });
 
+Meteor.publish('ordering', function (){
+  return Ordering.find();
+});
+
 Meteor.publish('tags', function (){
   return Tags.find();
 });
@@ -52,6 +56,10 @@ newComponent: function(data){
 
 updateComponent: function(item, data){
   Components.update(item, data);
+},
+
+updateOrderGuide: function(item, data){
+  Ordering.update(item, data); 
 },
 
 addComponentToMenuItem: function(item, data){

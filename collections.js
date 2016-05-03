@@ -3,6 +3,7 @@ Menus = new Mongo.Collection('menus');
 MenuItems = new Mongo.Collection('menuItems');
 Components = new Mongo.Collection('components');
 Preps = new Mongo.Collection('preps');
+Ordering = new Mongo.Collection('ordering');
 Tags = new Mongo.Collection('tags');
 
   eventsIndex = new EasySearch.Index({
@@ -22,5 +23,11 @@ Tags = new Mongo.Collection('tags');
   componentsIndex = new EasySearch.Index({
     collection: Components,
     fields: ['name', 'description'],
+    engine: new EasySearch.Minimongo()
+  });
+  
+  orderingIndex = new EasySearch.Index({
+    collection: Ordering,
+    fields: ['name'],
     engine: new EasySearch.Minimongo()
   });

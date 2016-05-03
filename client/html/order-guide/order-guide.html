@@ -1,0 +1,37 @@
+<template name="orderGuide"> 
+{{#if Template.subscriptionsReady}}
+<div class="row">
+  <div class="form-group col-md-6">
+    <label for="search-order-guide">Search Items: </label>
+    {{> EasySearch.Input index=orderingIndex attributes=inputAttributes}}
+    </div>
+    </div>
+  <table class="table table-bordered table-striped table-hover table-responsive" id="order-guide">
+      <thead>
+          <tr class="active">
+              <td>Product #</td>
+              <td>Name</td>
+              <td>Pack</td>
+              <td>Price</td>
+              <td>Price / Unit</td>
+          </tr>
+      </thead>
+    <tbody>
+      <tr></tr> <!--for :nth-child table striping -->
+   {{#EasySearch.Each index=orderingIndex }}
+  <tr class="ordering-guide-view">
+  <td data-field="itemId">{{itemId}}</td>
+  <td data-field="name">{{name}}</td>
+  <td data-field="pack">{{pack}}</td>
+  <td data-field="price">{{price}}</td>
+  <td editable="false">{{pricePerUnit price pack}}</td>
+  </tr>
+  {{/EasySearch.Each}}
+  </tbody>
+  </table>
+  <button class="btn btn-default add-line">Add Line</button>
+  {{else}}
+  {{> loading}}
+  {{/if}}
+</template>
+
