@@ -59,7 +59,7 @@ updateComponent: function(item, data){
 },
 
 updateOrderGuide: function(item, data){
-  Ordering.update(item, data); 
+  Ordering.update(item, data, {upsert: true}); 
 },
 
 addComponentToMenuItem: function(item, data){

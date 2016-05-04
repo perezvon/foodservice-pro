@@ -17,3 +17,7 @@ Template.registerHelper('totalPrice', function(){
     });
     return price;
 });
+
+Template.registerHelper('toCurrency', function(price){
+    if (!isNaN(price)) return "$" + eval(price).toFixed(2);
+});

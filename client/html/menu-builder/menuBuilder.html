@@ -16,14 +16,14 @@
         <td>{{quantity}}</td>
         <td>{{name}}</td>
         <td>{{description}}</td>
-        <td>{{cost}}</td>
-        <td>{{price}}</td>
+        <td>{{toCurrency cost}}</td>
+        <td>{{toCurrency price}}</td>
       </tr>
       {{/each}}
     </tbody>
   </table>
-  <div class="col-md-3">Total Menu Cost: {{totalCost}}</div>  
-  <div class="col-md-3">Total Menu Price: {{totalPrice}}</div>
+  <div class="col-md-3">Total Menu Cost: {{toCurrency totalCost}}</div>  
+  <div class="col-md-3">Total Menu Price: {{toCurrency totalPrice}}</div>
 </div>
 <div class="col-md-6">
   <div class="form-group">
