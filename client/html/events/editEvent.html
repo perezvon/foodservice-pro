@@ -51,8 +51,13 @@
     </form>
     
     <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
+    <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#staffing-form" aria-expanded="false" aria-controls="menu-build-form">Assign Staff</button>
+
     <div class="collapse" id="menu-build-form">
     {{> menuBuilder}}
+    </div>
+    <div class="collapse" id="staffing-form">
+      <div class="well col-md-6"></div>
     </div>
     {{else}}
     {{> loading}}

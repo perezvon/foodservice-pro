@@ -5,7 +5,7 @@
     <label for="search-order-guide">Search Items: </label>
     {{> EasySearch.Input index=orderingIndex attributes=inputAttributes}}
     </div>
-    </div>
+</div>
   <table class="table table-bordered table-striped table-hover table-responsive" id="order-guide">
       <thead>
           <tr class="active">
@@ -24,7 +24,7 @@
   <td data-field="name">{{name}}</td>
   <td data-field="pack">{{pack}}</td>
   <td data-field="price">{{toCurrency price}}</td>
-  <td editable="false">{{pricePerUnit price pack}}</td>
+  <td>{{pricePerUnit price pack}}</td>
   </tr>
   {{/EasySearch.Each}}
   </tbody>
