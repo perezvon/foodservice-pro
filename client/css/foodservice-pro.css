@@ -1,4 +1,4 @@
-.event-list-view, .item-list-view, .component-list-view {
+.event-list-view, .item-list-view, .component-list-view, #order-guide tbody td, .back {
   cursor: pointer; }
 
 #menu-build-items tr, #menu-build-dropzone tr {

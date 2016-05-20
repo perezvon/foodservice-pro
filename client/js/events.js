@@ -36,9 +36,12 @@ Template.events.events({
 });
 
 Template.editEvent.events({
-    'click #build-menu': function(e){
+    'click .nav-tabs a': function(e){
         e.preventDefault();
+        $(this).tab('show');
     },
+    
+    
     
         'keyup .form-control': function(e){
     if(e.which == 13 || e.which == 27){

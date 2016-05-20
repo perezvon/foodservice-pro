@@ -49,16 +49,17 @@
       </div>
     </div>
     </form>
+ 
+    <ul class="nav nav-tabs">
+      <li role="presentation"><a href="#menu" aria-controls="menu" role="tab" data-toggle="tab">Build Menu</a></li>
+      <li role="presentation"><a href="#staff" aria-controls="staff" role="tab" data-toggle="tab">Assign Staff</a></li>
+    </ul>
     
-    <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#menu-build-form" aria-expanded="false" aria-controls="menu-build-form">Build Menu</button>
-    <button class="btn btn-default" id="build-menu" data-toggle="collapse" data-target="#staffing-form" aria-expanded="false" aria-controls="menu-build-form">Assign Staff</button>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade" id="menu">{{> menuBuilder}}</div>
+      <div role="tabpanel" class="tab-pane fade" id="staff"><div class="well col-md-6"></div></div>
+    </div>
 
-    <div class="collapse" id="menu-build-form">
-    {{> menuBuilder}}
-    </div>
-    <div class="collapse" id="staffing-form">
-      <div class="well col-md-6"></div>
-    </div>
     {{else}}
     {{> loading}}
     {{/if}}

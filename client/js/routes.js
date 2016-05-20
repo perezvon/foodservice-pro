@@ -81,6 +81,14 @@
       }
     });
     
+    Router.route('/orderGuide/:_id', {
+      name: 'viewOrderGuideItem',
+      data: function() {
+        var currentOrderGuideItem = this.params._id;
+        return Ordering.findOne({_id: currentOrderGuideItem});
+      }
+    });
+    
     Router.route('/prep', {
       name: 'newPrep',
       template: 'newPrep'

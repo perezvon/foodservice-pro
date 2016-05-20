@@ -68,5 +68,14 @@ addComponentToMenuItem: function(item, data){
     component.rank = (hasComponents ? hasComponents.length + 1 : 1);
   MenuItems.update({_id: item}, {$addToSet: {components: component}});  
 
-}
+},
+
+parseUpload: function(data) {
+    check(data, Array);
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      Ordering.insert(item);
+    }
+  }
+
 });

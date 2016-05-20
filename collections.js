@@ -28,6 +28,6 @@ Tags = new Mongo.Collection('tags');
   
   orderingIndex = new EasySearch.Index({
     collection: Ordering,
-    fields: ['name'],
+    fields: ['name', 'itemId'],
     engine: new EasySearch.Minimongo()
   });

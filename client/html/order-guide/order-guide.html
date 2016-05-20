@@ -1,5 +1,6 @@
 <template name="orderGuide"> 
 {{#if Template.subscriptionsReady}}
+<div class="row">{{> upload}}</div>
 <div class="row">
   <div class="form-group col-md-6">
     <label for="search-order-guide">Search Items: </label>
@@ -9,22 +10,22 @@
   <table class="table table-bordered table-striped table-hover table-responsive" id="order-guide">
       <thead>
           <tr class="active">
-              <td>Product #</td>
               <td>Name</td>
               <td>Pack</td>
-              <td>Price</td>
-              <td>Price / Unit</td>
+              <td>Unit</td>
+              <td>Average Price</td>
+              <td>Average Price / Unit</td>
           </tr>
       </thead>
     <tbody>
       <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=orderingIndex }}
   <tr class="ordering-guide-view" data-id="{{_id}}">
-  <td data-field="itemId">{{itemId}}</td>
   <td data-field="name">{{name}}</td>
   <td data-field="pack">{{pack}}</td>
+  <td data-field="unit">{{unit}}</td>
   <td data-field="price">{{toCurrency price}}</td>
-  <td>{{pricePerUnit price pack}}</td>
+  <td>{{pricePerUnit price pack unit}}</td>
   </tr>
   {{/EasySearch.Each}}
   </tbody>
