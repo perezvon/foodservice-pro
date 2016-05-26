@@ -14,7 +14,7 @@ Tags = new Mongo.Collection('tags');
     })
   });
   
-  menuItemsIndex = new EasySearch.Index({
+ menuItemsIndex = new EasySearch.Index({
     collection: MenuItems,
     fields: ['name', 'description'],
     engine: new EasySearch.Minimongo()
@@ -28,6 +28,9 @@ Tags = new Mongo.Collection('tags');
   
   orderingIndex = new EasySearch.Index({
     collection: Ordering,
-    fields: ['name', 'itemId'],
-    engine: new EasySearch.Minimongo()
+    fields: ['name', 'productId'],
+    engine: new EasySearch.Minimongo(),
+    defaultSearchOptions: {
+    limit: 100
+  }
   });

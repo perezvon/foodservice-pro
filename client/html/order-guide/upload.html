@@ -1,9 +1,13 @@
 <template name="upload">
+  <div class="row">
   <h4 class="col-md-3">Upload a CSV</h4>
-
+  </div>
+  
+  <div class="row">
   {{#unless uploading}}
     <input class="col-md-3" type="file" name="uploadCSV">
   {{else}}
     <p><i class="fa fa-spin fa-refresh"></i> Uploading files...</p>
   {{/unless}}
+  </div>
 </template>

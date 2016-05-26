@@ -82,6 +82,7 @@ peerlibrary:blaze-components@0.16.2
 peerlibrary:computed-field@0.3.1
 peerlibrary:data-lookup@0.1.0
 peerlibrary:reactive-field@0.1.0
+peppelg:bootstrap-3-modal@1.0.4
 promise@0.6.7
 random@1.0.9
 rate-limit@1.0.4

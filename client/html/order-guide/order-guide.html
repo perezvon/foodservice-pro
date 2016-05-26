@@ -1,6 +1,9 @@
 <template name="orderGuide"> 
 {{#if Template.subscriptionsReady}}
-<div class="row">{{> upload}}</div>
+{{> upload}}
+<div class="row">
+  <div class="col-md-3"><button class="btn btn-default new-invoice">Enter New Invoice</button></div>
+</div>
 <div class="row">
   <div class="form-group col-md-6">
     <label for="search-order-guide">Search Items: </label>
@@ -10,27 +13,35 @@
   <table class="table table-bordered table-striped table-hover table-responsive" id="order-guide">
       <thead>
           <tr class="active">
+              <td>Vendor</td>
+              <td>Product #</td>
               <td>Name</td>
               <td>Pack</td>
+              <td>Size</td>
               <td>Unit</td>
-              <td>Average Price</td>
-              <td>Average Price / Unit</td>
+              <td>Price</td>
+              <td>Price / Unit</td>
           </tr>
       </thead>
     <tbody>
       <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=orderingIndex }}
   <tr class="ordering-guide-view" data-id="{{_id}}">
+  <td data-field="vendor">{{vendor}}</td>
+  <td data-field="productId">{{productId}}</td>
   <td data-field="name">{{name}}</td>
   <td data-field="pack">{{pack}}</td>
+  <td data-field="size">{{size}}</td>
   <td data-field="unit">{{unit}}</td>
   <td data-field="price">{{toCurrency price}}</td>
-  <td>{{pricePerUnit price pack unit}}</td>
+  <td>{{pricePerUnit price pack size unit}}</td>
   </tr>
   {{/EasySearch.Each}}
   </tbody>
   </table>
-  <button class="btn btn-default add-line">Add Line</button>
+  {{> EasySearch.Pagination index=orderingIndex maxPages=10}}
+  <!--<button class="btn btn-default add-line">Add Line</button>-->
+  <!--<button class="btn btn-default inventory">Inventory</button>-->
   {{else}}
   {{> loading}}
   {{/if}}

@@ -1,0 +1,42 @@
+<template name="newInvoice">
+    <form>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="date">Invoice Date: </label>
+            <input type="date" class="form-control" id="date" required>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="vendor">Vendor: </label>
+            <select class="form-control" id="vendor">
+                <option value="" selected></option>
+                {{#each vendors}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="product-search">Product # or Name</label>
+            {{> EasySearch.Input index=orderingIndex attributes=inputAttributes noDocumentsOnEmpty=true}}
+        </div>
+        <div class="form-group col-md-1">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="qty" required>
+        </div>
+        {{#EasySearch.Each index=orderingIndex }}
+        <div class="hidden">
+            <input type="text" class="form-control" id="_id" value="{{_id}}">
+        </div>
+        <div class="form-group col-md-1">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" value="{{price}}" required>
+        </div>
+        <div class="col-md-2">
+            <h4>{{name}}</h4>
+        </div>
+        {{/EasySearch.Each}}
+    </div>
+    <button type="submit" class="btn btn-default">Save</button>
+    </form>
+</template>

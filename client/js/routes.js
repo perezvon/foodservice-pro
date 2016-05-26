@@ -93,3 +93,8 @@
       name: 'newPrep',
       template: 'newPrep'
     });
+    
+    Router.route('/invoice', {
+      name: 'newInvoice',
+      template: 'newInvoice'
+    });

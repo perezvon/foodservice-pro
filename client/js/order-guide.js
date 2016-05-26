@@ -18,8 +18,8 @@ Template.orderGuide.helpers({
       return {'class': 'form-control', 'id': 'search-ordering-guide'};
     },
     
-    'pricePerUnit': function(price, pack, unit){
-        var result =  (price / pack).toFixed(2);
+    'pricePerUnit': function(price, pack, size, unit){
+        var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
     }
 });
@@ -41,7 +41,9 @@ Template.orderGuide.events({
    
    'click #order-guide tbody td': function(e){
        var currentId = e.target.parentElement.dataset.id;
-       Router.go('viewOrderGuideItem', {_id: currentId});  
+       Modal.show('viewOrderGuideItem', function(){
+           return Ordering.findOne({_id: currentId});
+           });  
    },
    
   'change #order-guide td': function(e, t){
@@ -52,5 +54,9 @@ Template.orderGuide.events({
        query[field] = newValue;
        Meteor.call('updateOrderGuide', {_id: currentId}, {$set: query});
        e.target.textContent = '';
-   } 
+   },
+   
+   'click .new-invoice': function(){
+       Router.go('newInvoice');
+   }
 });
