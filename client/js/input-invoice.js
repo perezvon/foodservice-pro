@@ -3,8 +3,8 @@ Template.newInvoice.helpers({
        var distinctEntries = _.uniq(Ordering.find({}, {
         sort: {vendor: 1}, fields: {vendor: true}
         }).fetch().map(function(x) {
-    return x.vendor;
-    }), true);
+            return x.vendor;
+        }), true);
     return distinctEntries;
    },
    'orderingIndex': function (){ return orderingIndex; },
@@ -19,14 +19,13 @@ Template.newInvoice.helpers({
 
 Template.newInvoice.events({
    'submit form': function(e){
-       e.preventDefault();
-       var currentId = $('#_id').val();
-       var inputs;
+        e.preventDefault();
+        var currentId = $('#_id').val();
         var data = {};
         data.date = moment($('#date').val()).toDate();
         data.qty = $('#qty').val();
         data.price = $('#price').val();
-       Meteor.call('updateOrderGuide', {_id: currentId}, {$addToSet:{orderHistory: data}}, function(error){
+        Meteor.call('updateOrderGuide', {_id: currentId}, {$addToSet:{orderHistory: data}}, function(error){
               if (error) Bert.alert(error.reason, 'danger');
               else {
                   Bert.alert('Item entered.', 'success', 'growl-top-right');

@@ -33,13 +33,13 @@ Template.orderGuide.events({
        
    }, 
    
-    'focus #order-guide tbody td': function(e){
+    'focus #order-guide tbody td': function (e) {
        var currentId = e.target.parentElement.dataset.id;
        //var currentId = (newId ? newId : this._id);
        Session.set('currentOrderGuideId', currentId);
    },
    
-   'click #order-guide tbody td': function(e){
+   'click #order-guide tbody td': function (e) {
        var currentId = e.target.parentElement.dataset.id;
        Modal.show('viewOrderGuideItem', function(){
            return Ordering.findOne({_id: currentId});
@@ -56,7 +56,11 @@ Template.orderGuide.events({
        e.target.textContent = '';
    },
    
-   'click .new-invoice': function(){
+   'click .new-invoice': function () {
        Router.go('newInvoice');
+   },
+   
+   'click .inventory': function () {
+       Router.go('inventory');
    }
 });

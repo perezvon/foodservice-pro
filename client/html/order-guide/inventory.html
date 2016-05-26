@@ -1,0 +1,22 @@
+<template name="inventory">
+    <button class="btn btn-default print-pdf">Print PDF</button>
+    <table class="table table-bordered table-striped table-hover table-responsive" id="inventory">
+        <thead>
+            <tr class="active">
+                <td>Place</td>
+                <td>Name</td>
+                <td>QTY</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {{#each getMonthlyOrdering}}
+            <tr>
+                <td>{{place}}</td>
+                <td>{{name}}</td>
+                <td></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</template>

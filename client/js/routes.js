@@ -98,3 +98,8 @@
       name: 'newInvoice',
       template: 'newInvoice'
     });
+
+    Router.route('/inventory', {
+      name: 'inventory',
+      template: 'inventory'
+    });
