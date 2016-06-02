@@ -14,8 +14,10 @@ boilerplate-generator@1.0.8
 caching-compiler@1.0.4
 caching-html-compiler@1.0.6
 callback-hook@1.0.8
+chart:chart@1.0.1-beta.4
 check@1.2.1
 coffeescript@1.0.17
+cosmos:browserify@0.8.4
 ddp@1.2.5
 ddp-client@1.2.7
 ddp-common@1.2.5
@@ -76,6 +78,7 @@ npm-bcrypt@0.8.5
 npm-mongo@1.4.43
 observe-sequence@1.0.11
 ordered-dict@1.0.7
+pascoual:pdfkitx@0.0.3
 peerlibrary:assert@0.2.5
 peerlibrary:base-component@0.14.0
 peerlibrary:blaze-components@0.16.2
