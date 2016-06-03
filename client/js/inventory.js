@@ -36,7 +36,7 @@ Template.inventory.events({
         var doc = new PDFDocument({size: 'A4', margin: 50});
         var stream = doc.pipe(blobStream());
         doc.fontSize(12);
-        doc.text(ordering, 10, 30, {align: 'center', width: 200});
+        doc.text(ordering.name, 10, 30, {width: 200});
         doc.end();
         stream.on('finish', function() {
          window.open(stream.toBlobURL('application/pdf'), '_blank');

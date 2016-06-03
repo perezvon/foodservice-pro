@@ -72,7 +72,7 @@ Template.viewOrderGuideItem.helpers ({
                     let trend = [];
                     for (let i = 0; i < currentItem.orderHistory.length; i++){
                         let curr = currentItem.orderHistory[i];
-                        trend.push({date: moment(curr.date).format("MM/DD/YYYY"), price: curr.price});
+                        trend.push({date: moment(curr.date).format("MM/DD/YYYY"), price: curr.price.toFixed(2)});
                      }
                      trend = _.sortBy(trend, 'date').reverse();
                     return trend;
