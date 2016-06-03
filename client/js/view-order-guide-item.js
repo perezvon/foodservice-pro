@@ -60,6 +60,7 @@ Template.viewOrderGuideItem.helpers ({
                     return lastOrderedDate;
                     break;
                 case "orderFrequency":
+                    //this returns 1 for each month, but what I really want is (# of cases ordered this year / 12)
                     let datesByMonth = [];
                     for (let i = 0; i < dates.length; i++){
                         let m = moment(dates[i]).format("MM");
