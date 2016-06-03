@@ -2,12 +2,10 @@
 
 Using Bootstrap and the power of Meteor to create catering software for foodservice operations.
 
-## dependencies
+## Documentation
 
-`mizzao:bootstrap-3`  
-`mizzao:jquery-ui`  
-`accounts-password`  
-`ian:accounts-ui-bootstrap-3`  
-`themeteorchef:bert`  
-`momentjs:moment`  
-`fullcalendar: fullcalendar`  
+Usage is pretty straightforward right now: I haven't implemented any login functionality yet because it's still in sandbox mode. Create events, build menus for events via drag-and-drop. Still working on staffing.
+
+There's a demo sandbox site [here](calihancatering.herokuapp.com)
+
+The ordering guide module provides a way to track product and generate inventory lists. 
