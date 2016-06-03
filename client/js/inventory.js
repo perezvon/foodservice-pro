@@ -23,6 +23,8 @@ Template.inventory.helpers({
 
 Template.inventory.events({
     'click .print-pdf': function () {
+        var month = moment().format("MM");
+        var year = moment().format("YYYY");
         var monthStart = new Date(year, (month - 1), 1);
         var monthEnd = new Date(year, (month === 11 ? 0 : month), 1);
         var ordering = Ordering.find({
