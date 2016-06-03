@@ -23,6 +23,8 @@ Template.inventory.helpers({
 
 Template.inventory.events({
     'click .print-pdf': function () {
+        var monthStart = new Date(year, (month - 1), 1);
+        var monthEnd = new Date(year, (month === 11 ? 0 : month), 1);
         var ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
            {fields: {name: 1, place: 1, orderHistory: 1}}, 
