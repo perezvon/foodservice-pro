@@ -32,15 +32,16 @@ Template.inventory.events({
            {fields: {name: 1, place: 1, orderHistory: 1}}, 
            {sort: {place: 1}
            }).fetch();
-        var monthYear = moment().format("MMMMYYYY");
+           
+        var monthYear = moment().format("MMMM YYYY");
         var doc = new PDFDocument({size: 'A4', margin: 50});
         var stream = doc.pipe(blobStream());
         doc.fontSize(12);
-        doc.text(ordering.name, 10, 30, {width: 200});
+        doc.text("Ordering for " + monthYear + "\n still working on this feature", 10, 30, {width: 200});
         doc.end();
         stream.on('finish', function() {
          window.open(stream.toBlobURL('application/pdf'), '_blank');
         });
-        //doc.write('Inventory' + monthYear + '.pdf');
+        //doc.write('Inventory ' + monthYear + '.pdf');
     }
 });
