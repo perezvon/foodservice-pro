@@ -24,9 +24,16 @@ Template.newComponent.events({
                description: description,
                unit: unit,
                cost: cost
-       });
+           }, 
+           function(error){
+               if (error) Bert.alert(error.reason, 'danger');
+               else {
+                   Bert.alert('Component created.', 'success');
+                   Router.go('components');
+               }
+        });
        }
-    });
+});
     
 
 Template.editComponent.events({
@@ -42,7 +49,6 @@ Template.editComponent.events({
         var updateVal = $(e.target).val();
         var update = {};
         update[updateField] = updateVal;
-        console.log(update);
        Meteor.call('updateComponent', { _id: currentComponent }, {$set: update });
         }
 });

@@ -18,7 +18,6 @@ Template.newMenuItem.events({
            var name = $('#menu-item-name').val();
            var type = $('#type').val();
            var tags = $('#tags').val();
-           var image = $('#image').val();
            var cost = $('#cost').val();
            var price = $('#price').val();
            var description = $('#description').val();
@@ -29,9 +28,14 @@ Template.newMenuItem.events({
                tags: tags,
                description: description,
                cost: cost,
-               price: price,
-               image: image
-           });
+               price: price
+           }, function(error){
+               if (error) Bert.alert(error.reason, 'danger');
+               else {
+                   Bert.alert('Menu Item created.', 'success');
+                   Router.go('menuItems');
+                }
+            });
        }
     });
     
