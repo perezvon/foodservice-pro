@@ -3,7 +3,7 @@ Template.registerHelper('totalCost', function(){
     var result = Events.findOne({_id: currentEvent}).menu;
     var cost = 0;
     result.forEach(function(each){
-        cost += eval(each.cost * each.qty);
+        cost += eval(each.cost * each.quantity);
     });
     return cost;
 });
@@ -13,7 +13,7 @@ Template.registerHelper('totalPrice', function(){
     var result = Events.findOne({_id: currentEvent}).menu;
     var price = 0;
     result.forEach(function(each){
-        price += eval(each.price * each.qty);
+        price += eval(each.price * each.quantity);
     });
     return price;
 });
