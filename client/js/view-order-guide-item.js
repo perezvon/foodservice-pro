@@ -46,28 +46,37 @@ Template.viewOrderGuideItem.helpers ({
         let currentItem = Ordering.findOne({_id: this._id}, {
             fields: {orderHistory: true}
         });
-        if (currentItem.orderHistory){
-            let dates = [];
-            for (let i = 0; i < currentItem.orderHistory.length; i++){
-                dates.push(currentItem.orderHistory[i].date);
-                }
-                dates.sort(function(a, b){
-                    return b - a;
-                });
+        
             switch (result) {
                 case "lastOrdered": 
-                    let lastOrderedDate = moment(dates[0]).format("MM/DD/YYYY");
+                    if (currentItem.orderHistory){
+                        let dates = [];
+                        for (let i = 0; i < currentItem.orderHistory.length; i++){
+                            dates.push(currentItem.orderHistory[i].date);
+                            }
+                        dates.sort(function(a, b){
+                        return b - a;
+                        });
+                        let lastOrderedDate = moment(dates[0]).format("MM/DD/YYYY");
                     return lastOrderedDate;
                     break;
+                    }
+                
                 case "orderFrequency":
                     //this returns 1 for each month, but what I really want is (# of cases ordered this year / 12)
-                    let datesByMonth = [];
-                    for (let i = 0; i < dates.length; i++){
-                        let m = moment(dates[i]).format("MM");
-                        datesByMonth.push(m);
+                    let curr = currentItem.orderHistory;
+                    console.log(curr);
+                    let totalOrdered = 0;
+                    if (curr){
+                        for (let i = 0; i < curr.length; i++){
+                            if(moment(curr[i].date).format("YYYY") == moment().format("YYYY")) {
+                                totalOrdered += eval(curr[i].qty);
+                            }
+                        }
+                        return ((totalOrdered / 12).toFixed(2) + " / Month");
                     }
-                    return ((datesByMonth) ? (datesByMonth.length / 12).toFixed(2) + " / Month" : "never ordered");
                     break;
+                
                 case "priceTrend":
                     let trend = [];
                     for (let i = 0; i < currentItem.orderHistory.length; i++){
@@ -80,5 +89,4 @@ Template.viewOrderGuideItem.helpers ({
                     break;
             }
         }
-    }
 });

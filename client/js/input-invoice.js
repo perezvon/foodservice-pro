@@ -1,5 +1,5 @@
 Template.newInvoice.helpers({
-   vendors() {
+    vendors() {
        var distinctEntries = _.uniq(Ordering.find({}, {
         sort: {vendor: 1}, fields: {vendor: true}
         }).fetch().map(function(x) {
@@ -22,6 +22,7 @@ Template.newInvoice.events({
         e.preventDefault();
         var currentId = $('#_id').val();
         var data = {};
+       //to do: check if entered date is latest date, then check whether this price is different than item.price & update if needed
         data.date = moment($('#date').val()).toDate();
         data.qty = $('#qty').val();
         data.price = $('#price').val();
