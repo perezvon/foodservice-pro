@@ -3,7 +3,7 @@
     <div class="row">
         <div class="form-group col-md-3">
             <label for="date">Invoice Date: </label>
-            <input type="date" class="form-control" id="date" required>
+            <input type="date" class="form-control" id="date" value="{{today}}" required>
         </div>
         <div class="form-group col-md-3">
             <label for="vendor">Vendor: </label>
@@ -19,24 +19,43 @@
         <div class="form-group col-md-3">
             <label for="product-search">Product # or Name</label>
             {{> EasySearch.Input index=orderingIndex attributes=inputAttributes noDocumentsOnEmpty=true}}
+        </div>     
+    </div>
+        <div class="row">
+            <div class="col-md-6">
+            <table class="table table-bordered table-striped table-hover table-responsive" id="inventory-items">
+                <thead>
+                    <tr class="active">
+                        <td>Product #</td>
+                        <td>Name</td>
+                    </tr>
+                </thead>
+                <tbody>
+            {{#EasySearch.Each index=orderingIndex }}
+            <tr class="inventory-item" data-id="{{_id}}">
+                <td data-field="productId">{{productId}}</td>
+                <td data-field="name">{{name}}</td>
+            </tr>
+            {{/EasySearch.Each}}
+                </tbody>
+            </table>
+            </div>
         </div>
-        <div class="form-group col-md-1">
+        <div class="row inventory-detail">
+            <input type="text" class="hidden form-control" id="_id">
+            <div class="form-group hidden col-md-1">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" required>
+            </div>
+        <div class="form-group hidden col-md-1">
             <label for="qty">Quantity</label>
             <input type="number" class="form-control" id="qty" required>
+        </div>       
+            <div class="form-group hidden col-md-2">
+                <h4 id="name"></h4>
+            </div>
         </div>
-        {{#EasySearch.Each index=orderingIndex }}
-        <div class="hidden">
-            <input type="text" class="form-control" id="_id" value="{{_id}}">
-        </div>
-        <div class="form-group col-md-1">
-            <label for="price">Price</label>
-            <input type="text" class="form-control" id="price" value="{{price}}" required>
-        </div>
-        <div class="col-md-2">
-            <h4>{{name}}</h4>
-        </div>
-        {{/EasySearch.Each}}
-    </div>
+        
     <button type="submit" class="btn btn-default">Save</button>
     </form>
 </template>

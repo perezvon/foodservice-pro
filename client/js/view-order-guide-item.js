@@ -46,13 +46,13 @@ Template.viewOrderGuideItem.helpers ({
         let currentItem = Ordering.findOne({_id: this._id}, {
             fields: {orderHistory: true}
         });
-        
+        let curr = currentItem.orderHistory;
+        if (curr){
             switch (result) {
                 case "lastOrdered": 
-                    if (currentItem.orderHistory){
                         let dates = [];
-                        for (let i = 0; i < currentItem.orderHistory.length; i++){
-                            dates.push(currentItem.orderHistory[i].date);
+                        for (let i = 0; i < curr.length; i++){
+                            dates.push(curr[i].date);
                             }
                         dates.sort(function(a, b){
                         return b - a;
@@ -60,33 +60,29 @@ Template.viewOrderGuideItem.helpers ({
                         let lastOrderedDate = moment(dates[0]).format("MM/DD/YYYY");
                     return lastOrderedDate;
                     break;
-                    }
+                    
                 
                 case "orderFrequency":
                     //this returns 1 for each month, but what I really want is (# of cases ordered this year / 12)
-                    let curr = currentItem.orderHistory;
-                    console.log(curr);
                     let totalOrdered = 0;
-                    if (curr){
                         for (let i = 0; i < curr.length; i++){
                             if(moment(curr[i].date).format("YYYY") == moment().format("YYYY")) {
                                 totalOrdered += eval(curr[i].qty);
                             }
                         }
-                        return ((totalOrdered / 12).toFixed(2) + " / Month");
-                    }
+                        return ((totalOrdered / 12).toFixed(1) + " / Month");
                     break;
                 
                 case "priceTrend":
                     let trend = [];
-                    for (let i = 0; i < currentItem.orderHistory.length; i++){
-                        let curr = currentItem.orderHistory[i];
-                        let price = eval((curr.price)).toFixed(2);
-                        trend.push({date: moment(curr.date).format("MM/DD/YYYY"), price: price});
+                    for (let i = 0; i < curr.length; i++){
+                        let price = eval((curr[i].price)).toFixed(2);
+                        trend.push({date: moment(curr[i].date).format("MM/DD/YYYY"), price: price});
                      }
                      trend = _.sortBy(trend, 'date').reverse();
                     return trend;
                     break;
             }
         }
+    }
 });

@@ -13,12 +13,15 @@ Template.newInvoice.helpers({
     }, 
     'inputAttributes': function() {
       return {'class': 'form-control', 'id': 'productId'};
+    },
+    today() {
+        return moment().format("YYYY-MM-DD");
     }
 });
 
 
 Template.newInvoice.events({
-   'submit form': function(e){
+   'submit form': function (e) {
         e.preventDefault();
         var currentId = $('#_id').val();
         var data = {};
@@ -32,5 +35,16 @@ Template.newInvoice.events({
                   Bert.alert('Item entered.', 'success', 'growl-top-right');
                }
            });
+    },
+    
+    'click .inventory-item': function (e) {
+        let currentId = e.target.parentElement.dataset.id;
+        let currentItem = Ordering.findOne({_id: currentId});
+        let price = currentItem.price;
+        let name = currentItem.name;
+        $('.form-group').removeClass('hidden');
+        $('#_id').val(currentId);
+        $('#price').val(price);
+        $('#name').text(name);
     }
 });
