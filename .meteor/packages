@@ -34,3 +34,4 @@ check
 peppelg:bootstrap-3-modal
 chart:chart
 pascoual:pdfkitx
+iron:middleware-stack@1.1.0

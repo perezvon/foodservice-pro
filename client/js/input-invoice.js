@@ -46,5 +46,10 @@ Template.newInvoice.events({
         $('#_id').val(currentId);
         $('#price').val(price);
         $('#name').text(name);
+    },
+    
+    'change select': function (e) {
+        orderingIndex.getComponentMethods()
+            .addProps('vendor', $(e.target).val());
     }
 });

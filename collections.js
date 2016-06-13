@@ -29,8 +29,17 @@ Tags = new Mongo.Collection('tags');
   orderingIndex = new EasySearch.Index({
     collection: Ordering,
     fields: ['name', 'productId'],
-    engine: new EasySearch.Minimongo(),
     defaultSearchOptions: {
-    limit: 100
-  }
+        limit: 100
+    },
+    engine: new EasySearch.Minimongo({
+        selector (searchObject, options, aggregation) {
+            let selector = this.defaultConfiguration().selector(searchObject, options, aggregation);
+            // filter for vendor if set
+            if (options.search.props.vendor) {
+                selector.vendor = options.search.props.vendor;
+            }
+            return selector;
+        }
+    })
   });

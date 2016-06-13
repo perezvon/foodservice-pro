@@ -1,13 +1,15 @@
-/*Template.orderGuide.onRendered(function(){
+Template.orderGuide.onRendered(function(){
     //should automatically refresh when a new item is added to Ordering, but does not.
-    this.autorun(function(){
+    /*this.autorun(function(){
         var orderingGuideTrack = function(){
             return Ordering.find().fetch();
         };
         if (orderingGuideTrack())
      $('#order-guide tbody').editableTableWidget();
-    });
-});*/
+    });*/
+    orderingIndex.getComponentMethods()
+            .removeProps('vendor');
+});
 
 Template.orderGuide.helpers({
     'orderingIndex': function (){ return orderingIndex; },
