@@ -12,15 +12,23 @@ Template.orderGuide.onRendered(function(){
 });
 
 Template.orderGuide.helpers({
-    'orderingIndex': function (){ return orderingIndex; },
-    'order-guide': function(){
+    vendors() {
+       var distinctEntries = _.uniq(Ordering.find({}, {
+        sort: {vendor: 1}, fields: {vendor: true}
+        }).fetch().map(function(x) {
+            return x.vendor;
+        }), true);
+    return distinctEntries;
+   },
+    orderingIndex() { return orderingIndex; },
+    'order-guide'() {
       return Ordering.find({});
     }, 
-    'inputAttributes': function() {
+    inputAttributes() {
       return {'class': 'form-control', 'id': 'search-ordering-guide'};
     },
     
-    'pricePerUnit': function(price, pack, size, unit){
+    pricePerUnit(price, pack, size, unit){
         var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
     }
