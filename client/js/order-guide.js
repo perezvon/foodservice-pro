@@ -29,8 +29,10 @@ Template.orderGuide.helpers({
     },
     
     pricePerUnit(price, pack, size, unit){
+        if (price) {
         var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
+        }
     }
 });
 
