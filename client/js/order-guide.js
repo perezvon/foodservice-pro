@@ -72,5 +72,10 @@ Template.orderGuide.events({
    
    'click .inventory': function () {
        Router.go('inventory');
-   }
+   },
+    
+    'change select': function (e) {
+        orderingIndex.getComponentMethods()
+            .addProps('vendor', $(e.target).val());
+    }
 });
