@@ -88,6 +88,8 @@
         return Ordering.findOne({_id: currentOrderGuideItem});
       }
     });
+
+    Router.route('/newOrderGuideItem');
     
     Router.route('/prep', {
       name: 'newPrep',

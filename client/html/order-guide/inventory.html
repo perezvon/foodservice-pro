@@ -1,12 +1,28 @@
 <template name="inventory">
+    
     <button class="btn btn-default print-pdf">Print PDF</button>
-    <h2>Ordered in {{month}}</h2>
+    <div class="row">
+        <div class="col-md-12">
+        <h2>Inventory for {{month}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="place">Place: </label>
+                <select class="form-control" id="place">
+                    <option value="" selected>All</option>
+                    {{#each places}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+        </div>
+    </div>
     <table class="table table-bordered table-striped table-hover table-responsive" id="inventory">
         <thead>
             <tr class="active">
                 <td>Place</td>
                 <td>Name</td>
-                <td>QTY</td>
+                <td>Stock</td>
             </tr>
         </thead>
         

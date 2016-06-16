@@ -24,12 +24,12 @@ Meteor.publish('tags', function (){
 
 Meteor.methods({
 
-newEvent: function(data){
+newEvent (data){
   data.createdDate = new Date();
   Events.insert(data);
 }, 
   
-addMenuItemToEvent: function (event, data) {
+addMenuItemToEvent (event, data) {
     var menuItem = MenuItems.findOne({_id: data});
     var hasMenu = Events.findOne({_id: event}).menu;
     menuItem.rank = (hasMenu ? hasMenu.length + 1 : 1);
@@ -37,32 +37,36 @@ addMenuItemToEvent: function (event, data) {
   Events.update({_id: event}, {$addToSet: {menu: menuItem}});  
 },
 
-updateEvent: function (event, data) {
+updateEvent (event, data) {
   Events.update(event, data);
 },
 
-newMenuItem: function(data){
+newMenuItem (data){
   data.createdDate = new Date();
   MenuItems.insert(data);
 },
 
-updateMenuItem: function(item, data){
+updateMenuItem (item, data){
   MenuItems.update(item, data);
 },
 
-newComponent: function(data){
+newComponent (data){
   Components.insert(data);
 },
+    
+newOrderGuideItem (data) {
+    Ordering.insert(data);
+},
 
-updateComponent: function(item, data){
+updateComponent (item, data){
   Components.update(item, data);
 },
 
-updateOrderGuide: function(item, data){
+updateOrderGuide (item, data){
   Ordering.update(item, data, {upsert: true}); 
 },
 
-addComponentToMenuItem: function(item, data){
+addComponentToMenuItem (item, data){
     var component = Components.findOne({_id: data});
     var hasComponents = MenuItems.findOne({_id: item}).components;
     component.rank = (hasComponents ? hasComponents.length + 1 : 1);
@@ -70,12 +74,19 @@ addComponentToMenuItem: function(item, data){
 
 },
 
-parseUpload: function(data) {
+parseUpload (data) {
     check(data, Array);
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       Ordering.insert(item);
     }
-  }
+  },
+    
+printPDF (page, file) {
+    webshot(page, file, function (err) {
+    if(err) throw err;
+    console.log('Saved to PDF');
+});
+}
 
 });

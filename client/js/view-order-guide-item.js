@@ -63,7 +63,6 @@ Template.viewOrderGuideItem.helpers ({
                     
                 
                 case "orderFrequency":
-                    //this returns 1 for each month, but what I really want is (# of cases ordered this year / 12)
                     let totalOrdered = 0;
                         for (let i = 0; i < curr.length; i++){
                             if(moment(curr[i].date).format("YYYY") == moment().format("YYYY")) {

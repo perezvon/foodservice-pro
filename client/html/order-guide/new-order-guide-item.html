@@ -1,0 +1,89 @@
+<template name="newOrderGuideItem">
+    <form>
+        <div class="row">
+            <div class="form-group col-md-3">
+            <label for="vendor">Vendor: </label>
+            <select class="form-control" id="vendor">
+                <option value="" selected></option>
+                {{#each vendors}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+            <div class="form-group col-md-3">
+            <label for="name">Name: </label>
+            <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group col-md-3">
+            <label for="productId">Product #: </label>
+            <input type="text" class="form-control" id="productId">
+            </div>
+        </div>
+        <div class="row">   
+            <div class="form-group col-md-3">
+            <label for="category">Category: </label>
+            <select class="form-control" id="category">
+                <option value="" selected></option>
+                {{#each categories}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+            <div class="form-group col-md-1">
+            <label for="pack">Pack: </label>
+            <input type="number" class="form-control" id="pack">
+            </div>
+            <div class="form-group col-md-1">
+            <label for="pack">Size: </label>
+            <input type="number" class="form-control" id="size">
+            </div>
+            <div class="form-group col-md-1">
+            <label for="unit">Unit: </label>
+            <select class="form-control" id="unit">
+                <option value="" selected></option>
+                {{#each units}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+            <label for="subcategory">Subcategory: </label>
+            <select class="form-control" id="subcategory">
+                <option value="" selected></option>
+                {{#each subcategories}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+            <div class="form-group col-md-1">
+            <label for="price">Price: </label>
+            <input type="number" step="0.01" class="form-control" id="price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+            <label for="place">Place: </label>
+            <select class="form-control" id="place">
+                <option value="" selected></option>
+                {{#each places}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+            <label for="inventoryCode">Inv Code: </label>
+            <select class="form-control" id="inventoryCode">
+                <option value="" selected></option>
+                {{#each inventoryCodes}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+            </div>
+        </div>
+    <button type="submit" class="btn btn-default">Create Item</button>
+    </form>
+</template>

@@ -5,11 +5,12 @@ Template.inventory.helpers({
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
        var monthEnd = new Date(year, (month === 11 ? 0 : month), 1);
-       var ordering = Ordering.find({
+       
+         var ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
            {fields: {name: 1, place: 1, orderHistory: 1}}, 
            {sort: {place: 1}
-           }).fetch();
+           }).fetch();  
        //to do: get all items that were in stock on last month's inventory, filter duplicate productId, add to ordering, return this
        //let stock = Inventory.find({month: month, qty: {$gt: 0}}).fetch();
        
@@ -18,11 +19,19 @@ Template.inventory.helpers({
    
    month() {
        return moment().format("MMMM YYYY");
-   }
+   },
+    places() {
+       var distinctEntries = _.uniq(Ordering.find({}, {
+        sort: {place: 1}, fields: {place: true}
+        }).fetch().map(function(x) {       
+            return x.place;
+        }), true);
+    return distinctEntries;
+   }    
 });
 
 Template.inventory.events({
-    'click .print-pdf': function () {
+    /* old // 'click .print-pdf': function () {
         var month = moment().format("MM");
         var year = moment().format("YYYY");
         var monthStart = new Date(year, (month - 1), 1);
@@ -43,5 +52,12 @@ Template.inventory.events({
          window.open(stream.toBlobURL('application/pdf'), '_blank');
         });
         //doc.write('Inventory ' + monthYear + '.pdf');
+    } */
+    'click .print-pdf'() {
+        Meteor.call('printPDF', 'https://www.google.com', 'google.pdf');
+    },
+    'change select': function (e) {
+        var place = $(e.target).val();
+        
     }
 });

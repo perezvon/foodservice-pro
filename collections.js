@@ -39,7 +39,11 @@ Tags = new Mongo.Collection('tags');
             if (options.search.props.vendor) {
                 selector.vendor = options.search.props.vendor;
             }
+            if (options.search.props.place) {
+                selector.place = options.search.props.place;
+            }
             return selector;
         }
     })
   });
+
