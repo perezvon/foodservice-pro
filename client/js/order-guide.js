@@ -29,7 +29,7 @@ Template.orderGuide.helpers({
     },
     
     pricePerUnit(price, pack, size, unit){
-        if (price) {
+        if (price && pack && size) {
         var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
         }
