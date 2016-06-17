@@ -38,17 +38,17 @@ Template.newInvoice.events({
             itemHistory.push({date: moment(curr[i].date).toDate(), price: price});
             }
             itemHistory = _.sortBy(itemHistory, 'date').reverse();
-           console.log(itemHistory);
+            data.date = moment($('#date').val()).toDate();
+            data.qty = $('#qty').val();
+            data.price = $('#price').val();
+            //check if entered date is latest date, then check whether this price is different than item.price & update if needed
+            if (data.date > itemHistory[0].date) {
+                if (data.price !== itemHistory[0].price) {
+                    Meteor.call('updateOrderGuide', {_id: currentId}, {$set: {price: parseFloat(data.price)}});
+                }    
+            }
         }
-        data.date = moment($('#date').val()).toDate();
-        data.qty = $('#qty').val();
-        data.price = $('#price').val();
-        //check if entered date is latest date, then check whether this price is different than item.price & update if needed
-        if (data.date > itemHistory[0].date) {
-            if (data.price !== itemHistory[0].price) {
-                Meteor.call('updateOrderGuide', {_id: currentId}, {$set: {price: parseFloat(data.price)}});
-            }    
-        }
+        
        //add the order record to the item's history
         Meteor.call('updateOrderGuide', {_id: currentId}, {$addToSet:{orderHistory: data}}, function(error){
               if (error) Bert.alert(error.reason, 'danger');
