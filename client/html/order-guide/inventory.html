@@ -1,6 +1,4 @@
 <template name="inventory">
-    
-    <button class="btn btn-default print-pdf">Print PDF</button>
     <div class="row">
         <div class="col-md-12">
         <h2>Inventory for {{month}}</h2>
@@ -22,7 +20,9 @@
             <tr class="active">
                 <td>Place</td>
                 <td>Name</td>
-                <td>Stock</td>
+                <td>Pack</td>
+                <td>Size</td>
+                <td>In Stock</td>
             </tr>
         </thead>
         
@@ -31,6 +31,8 @@
             <tr>
                 <td>{{place}}</td>
                 <td>{{name}}</td>
+                <td>{{pack}}</td>
+                <td>{{size}} {{unit}}</td>
                 <td></td>
             </tr>
             {{/each}}

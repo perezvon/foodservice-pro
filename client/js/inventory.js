@@ -5,16 +5,23 @@ Template.inventory.helpers({
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
        var monthEnd = new Date(year, (month === 11 ? 0 : month), 1);
-       
-         var ordering = Ordering.find({
+       var place = Session.get('place');
+       if (place){
+        var ordering = Ordering.find({
+            place: place,
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
-           {fields: {name: 1, place: 1, orderHistory: 1}}, 
+           {sort: {place: 1}
+           }).fetch();
+       } else {
+           var ordering = Ordering.find({
+           orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
            {sort: {place: 1}
            }).fetch();  
-       //to do: get all items that were in stock on last month's inventory, filter duplicate productId, add to ordering, return this
+       }
+         //to do: get all items that were in stock on last month's inventory, filter duplicate productId, add to ordering, return this
        //let stock = Inventory.find({month: month, qty: {$gt: 0}}).fetch();
-       
        return ordering;
+           
    },
    
    month() {
@@ -31,33 +38,9 @@ Template.inventory.helpers({
 });
 
 Template.inventory.events({
-    /* old // 'click .print-pdf': function () {
-        var month = moment().format("MM");
-        var year = moment().format("YYYY");
-        var monthStart = new Date(year, (month - 1), 1);
-        var monthEnd = new Date(year, (month === 11 ? 0 : month), 1);
-        var ordering = Ordering.find({
-           orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
-           {fields: {name: 1, place: 1, orderHistory: 1}}, 
-           {sort: {place: 1}
-           }).fetch();
-           
-        var monthYear = moment().format("MMMM YYYY");
-        var doc = new PDFDocument({size: 'A4', margin: 50});
-        var stream = doc.pipe(blobStream());
-        doc.fontSize(12);
-        doc.text("Ordering for " + monthYear + "\n still working on this feature", 10, 30, {width: 200});
-        doc.end();
-        stream.on('finish', function() {
-         window.open(stream.toBlobURL('application/pdf'), '_blank');
-        });
-        //doc.write('Inventory ' + monthYear + '.pdf');
-    } */
-    'click .print-pdf'() {
-        Meteor.call('printPDF', 'https://www.google.com', 'google.pdf');
-    },
     'change select': function (e) {
         var place = $(e.target).val();
+        Session.set('place', place);
         
     }
 });
