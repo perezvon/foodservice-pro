@@ -85,13 +85,21 @@ addComponentToMenuItem (item, data){
 parseUpload (data, command) {
     check(data, Array);
     if (command == 'newInventory') {
-        var month = moment().format("MM");
+        let month = moment().format("MM");
         month--;
         Meteor.call(command, {'month': month, 'inventory': data});
+    } 
+    else if (command == 'updateOrderGuide') {
+        for (let i = 0; i < data.length; i++){
+            let currentRecord = data[i];
+        let id = {productId: currentRecord.productId};
+            let updateData = {$addToSet: {orderHistory: currentRecord}};
+        Meteor.call(command, id, updateData);  
+        }
     } else {
     for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-        Meteor.call(command, item);
+      let record = data[i];
+        Meteor.call(command, record);
     }
     }
   },
