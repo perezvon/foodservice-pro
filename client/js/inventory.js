@@ -1,5 +1,6 @@
 Template.inventory.onRendered(function(){
     Session.set('uploadCommand', 'newInventory');
+    Session.set('place', '');
        $('#inventory tbody').editableTableWidget();
 });
 
@@ -10,19 +11,10 @@ Template.inventory.helpers({
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
        var monthEnd = new Date((month === 11 ? year : year+1), (month === 11 ? 0 : month), 1);
-       var place = Session.get('place');
-       if (place){
         var ordering = Ordering.find({
-            place: place,
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
-           {sort: {place: 1}
+           {sort: {place: 1, name: 1}
            }).fetch();
-       } else {
-           var ordering = Ordering.find({
-           orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}}, 
-           {sort: {place: 1}
-           }).fetch();  
-       }
          //to do: get all items that were in stock on last month's inventory, filter duplicate productId, add to ordering, return this
        let stock = Inventory.findOne({month: month-1}).inventory.filter(function(obj){
         if (parseInt(obj.qty) > 0) return true;
@@ -31,7 +23,13 @@ Template.inventory.helpers({
         if (a.productId !== b.productId ) a.push(b);
         return a;
         },[]);
-       console.log(ordering);
+       var place = Session.get('place');
+       console.log(place);
+       if (place) {
+           ordering = ordering.filter(function(a){
+               if (a.place == place) return true;
+           });
+       }
        return ordering;
    },
    
