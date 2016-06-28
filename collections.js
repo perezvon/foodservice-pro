@@ -4,6 +4,7 @@ MenuItems = new Mongo.Collection('menuItems');
 Components = new Mongo.Collection('components');
 Preps = new Mongo.Collection('preps');
 Ordering = new Mongo.Collection('ordering');
+Inventory = new Mongo.Collection('inventory');
 Tags = new Mongo.Collection('tags');
 
   eventsIndex = new EasySearch.Index({

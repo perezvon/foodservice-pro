@@ -18,6 +18,10 @@ Meteor.publish('ordering', function (){
   return Ordering.find();
 });
 
+Meteor.publish('inventory', function(){
+    return Inventory.find();
+});
+
 Meteor.publish('tags', function (){
   return Tags.find();
 });
@@ -58,6 +62,10 @@ newOrderGuideItem (data) {
     Ordering.insert(data);
 },
 
+newInventory (data){
+  Inventory.insert(data);
+},    
+    
 updateComponent (item, data){
   Components.update(item, data);
 },
@@ -74,11 +82,17 @@ addComponentToMenuItem (item, data){
 
 },
 
-parseUpload (data) {
+parseUpload (data, command) {
     check(data, Array);
+    if (command == 'newInventory') {
+        var month = moment().format("MM");
+        month--;
+        Meteor.call(command, {'month': month, 'inventory': data});
+    } else {
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      Ordering.insert(item);
+        Meteor.call(command, item);
+    }
     }
   },
     

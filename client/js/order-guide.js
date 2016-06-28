@@ -7,6 +7,7 @@ Template.orderGuide.onRendered(function(){
         if (orderingGuideTrack())
      $('#order-guide tbody').editableTableWidget();
     });*/
+    Session.set('uploadCommand', 'newOrderGuideItem');
     orderingIndex.getComponentMethods()
             .removeProps('vendor');
 });

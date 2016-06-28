@@ -1,3 +1,7 @@
+Template.newInvoice.onRendered(function(){
+    Session.set('uploadCommand', 'updateOrderGuide');
+});
+
 Template.newInvoice.helpers({
     vendors() {
        var distinctEntries = _.uniq(Ordering.find({}, {

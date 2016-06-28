@@ -15,7 +15,7 @@ Template.upload.events({
     Papa.parse( event.target.files[0], {
       header: true,
       complete( results, file ) {
-        Meteor.call( 'parseUpload', results.data, ( error, response ) => {
+        Meteor.call( 'parseUpload', results.data, Session.get('uploadCommand'), ( error, response ) => {
           if ( error ) {
             console.log( error.reason );
           } else {
