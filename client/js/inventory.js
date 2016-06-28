@@ -22,9 +22,10 @@ Template.inventory.helpers({
        ordering = ordering.concat(stock).reduce(function(a,b){
         if (a.productId !== b.productId ) a.push(b);
         return a;
-        },[]);
+        },[]).sort(function(a, b){
+               return a.name - b.name;
+           });
        var place = Session.get('place');
-       console.log(place);
        if (place) {
            ordering = ordering.filter(function(a){
                if (a.place == place) return true;
