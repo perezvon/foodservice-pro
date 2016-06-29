@@ -29,7 +29,7 @@ Template.newInvoice.events({
        e.preventDefault();
        var currentId = $('#_id').val();
        var data = {};
-       data.date = moment($('#date').val().toDate());
+       data.date = moment($('#date').val()).toDate();
        data.qty = $('#qty').val();
        data.price = $('#price').val();
        var currentPrice = 0.00;
@@ -40,7 +40,7 @@ Template.newInvoice.events({
        
         let itemHistory = [];
         if (currentItem.orderHistory){
-            let curr = currentItem.orderHistory; 
+            let curr = currentItem.orderHistory;
             for (let i = 0; i < curr.length; i++){
                 let price = parseInt((curr[i].price)).toFixed(2);
                 itemHistory.push({date: moment(curr[i].date).toDate(), price: price});
