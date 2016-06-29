@@ -25,7 +25,6 @@ Template.inventory.helpers({
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
        }
-       console.log(ordering);
        var place = Session.get('place');
        if (place) {
            ordering = ordering.filter(function(a){

@@ -93,7 +93,6 @@ parseUpload (data, command) {
         for (let i = 0; i < data.length; i++){
             let currentRecord = data[i];
             currentRecord.date = Meteor.call('standardizeDate', currentRecord.date);
-            console.log(currentRecord.date);
         let id = {productId: currentRecord.productId};
             let updateData = {$addToSet: {orderHistory: currentRecord}};
         Meteor.call(command, id, updateData);  
