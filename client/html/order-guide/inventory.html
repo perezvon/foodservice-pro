@@ -1,4 +1,5 @@
 <template name="inventory">
+    {{#if Template.subscriptionsReady}}
     {{> upload}}
     <div class="row">
         <div class="col-md-12">
@@ -39,4 +40,5 @@
             {{/each}}
         </tbody>
     </table>
+    {{/if}}
 </template>

@@ -10,20 +10,22 @@ Template.inventory.helpers({
        var month = moment().format("MM");
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
-       var monthEnd = new Date((month === 11 ? year : year+1), (month === 11 ? 0 : month), 1);
+       var monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
         var ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
         }).fetch();
-         //to do: get all items that were in stock on last month's inventory, filter duplicate productId, add to ordering, return this
-       let stock = Inventory.findOne({month: month-1}).inventory.filter(function(obj){
+       
+       let stock = Inventory.findOne({month: month-1});
+       if (stock){
+           stock = stock.inventory.filter(function(obj){
         if (parseInt(obj.qty) > 0) return true;
        });
        ordering = ordering.concat(stock).sort(function(a, b){
                return a.name.localeCompare(b.name);
-           }).filter(function(a,b){
-            return a.productId !== b.productId;   
-       });
-       
+           });
+           ordering = _.uniq(ordering, true, function(a){return a.productId;});
+       }
+       console.log(ordering);
        var place = Session.get('place');
        if (place) {
            ordering = ordering.filter(function(a){

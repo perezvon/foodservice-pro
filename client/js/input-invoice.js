@@ -29,7 +29,7 @@ Template.newInvoice.events({
        e.preventDefault();
        var currentId = $('#_id').val();
        var data = {};
-       data.date = moment($('#date').val()).toDate();
+       data.date = moment($('#date').val().toDate());
        data.qty = $('#qty').val();
        data.price = $('#price').val();
        var currentPrice = 0.00;

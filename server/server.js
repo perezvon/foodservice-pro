@@ -92,6 +92,7 @@ parseUpload (data, command) {
     else if (command == 'updateOrderGuide') {
         for (let i = 0; i < data.length; i++){
             let currentRecord = data[i];
+            currentRecord.date = Meteor.call('standardizeDate', currentRecord.date);
         let id = {productId: currentRecord.productId};
             let updateData = {$addToSet: {orderHistory: currentRecord}};
         Meteor.call(command, id, updateData);  
@@ -109,6 +110,10 @@ printPDF (page, file) {
     if(err) throw err;
     console.log('Saved to PDF');
 });
+},
+    
+standardizeDate (date) {
+    date = moment(date).toDate();
 }
 
 });
