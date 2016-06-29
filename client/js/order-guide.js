@@ -41,8 +41,10 @@ Template.orderGuide.events({
     'click #update-dates': function(){
       let orderedItems = Ordering.find({}, {orderHistory: 1}).fetch();
         for (let i = 0; i < orderedItems.length; i++){
+            if (orderedItems.orderHistory){
             for (let j = 0; j < orderedItems[i].orderHistory.length; j++) {
                orderedItems[i].orderHistory[j].date = Meteor.call('standardizeDate', orderedItems[i].orderHistory[j].date);
+            }
             }
         }
     },
