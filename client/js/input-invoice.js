@@ -27,6 +27,7 @@ Template.newInvoice.helpers({
 Template.newInvoice.events({
    'submit form': function (e) {
        e.preventDefault();
+       if (!$('#productId').is(':focus')) {
        var currentId = $('#_id').val();
        var data = {};
        data.date = moment($('#date').val()).toDate();
@@ -62,8 +63,12 @@ Template.newInvoice.events({
               if (error) Bert.alert(error.reason, 'danger');
               else {
                   Bert.alert('Item entered.', 'success', 'growl-top-right');
+                  $('#qty').val('');
+                  $('#productId').val('').focus();
+                  $('.inventory-detail').addClass('hidden');
                }
            });
+   }
     },
     
     'click .inventory-item': function (e) {
@@ -71,7 +76,7 @@ Template.newInvoice.events({
         let currentItem = Ordering.findOne({_id: currentId});
         let price = currentItem.price;
         let name = currentItem.name;
-        $('.form-group').removeClass('hidden');
+        $('.inventory-detail').removeClass('hidden');
         $('#_id').val(currentId);
         $('#price').val(price);
         $('#name').text(name);
