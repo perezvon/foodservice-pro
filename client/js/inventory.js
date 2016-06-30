@@ -52,5 +52,32 @@ Template.inventory.events({
         var place = $(e.target).val();
         Session.set('place', place);
         
+    }, 
+    
+    'click .save': function (e) {
+        e.preventDefault();
+        let result = {};
+        let month = moment().format("MM");
+        let inventory = [];
+        $('#inventory tbody tr').each(function(){
+            $this = $(this);
+            let data = {};
+            $this.children().each(function(){
+                $that = $(this);
+                let key = $that.data("field");
+                let value = $that.html();
+                data[key] = value;
+                });
+            inventory.push(data);
+        });
+            result.month = month;
+            result.inventory = inventory;
+            Meteor.call('newInventory', result, function(error){
+                if (error) Bert.alert(error.reason, 'danger');
+                else {
+                    Bert.alert('Inventory saved.', 'success');
+                    Router.go('orderGuide');
+                }
+            });
     }
 });
