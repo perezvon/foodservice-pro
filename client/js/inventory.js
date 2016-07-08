@@ -5,9 +5,12 @@ Template.inventory.onRendered(function(){
 });
 
 Template.inventory.helpers({
-   getMonthlyOrdering() {
+   getMonthlyOrdering (currentMonth) {
        //get all items ordered in current month
-       var month = moment().format("MM");
+       
+       var month; 
+       if (currentMonth) month = currentMonth;
+       else month = moment().format("MM");
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
        var monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
@@ -31,12 +34,17 @@ Template.inventory.helpers({
                if (a.place == place) return true;
            });
        }
+       $("#inventory tbody").editableTableWidget();
        return ordering;
    },
    
-   month() {
-       return moment().format("MMMM YYYY");
+   getMonth() {
+    return moment().format("MMMM YYYY");
    },
+    inventories () {
+      return Inventory.find().fetch();  
+    },
+    
     places() {
        var distinctEntries = _.uniq(Ordering.find({}, {
         sort: {place: 1}, fields: {place: true}
@@ -48,11 +56,16 @@ Template.inventory.helpers({
 });
 
 Template.inventory.events({
-    'change select': function (e) {
-        var place = $(e.target).val();
+    'change #place': function (e) {
+        let place = $(e.target).val();
         Session.set('place', place);
         
     }, 
+    
+    'change #past-inventory': function (e) {
+        let currentInventory = {};
+        currentInventory.month = $(e.target).val();        Router.go('pastInventory', currentInventory);
+    },
     
     'click .save': function (e) {
         e.preventDefault();

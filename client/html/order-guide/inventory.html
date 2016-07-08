@@ -3,7 +3,7 @@
     {{> upload}}
     <div class="row">
         <div class="col-md-12">
-        <h2>Inventory - {{month}}</h2>
+        <h2>Inventory - {{getMonth}}</h2>
         </div>
     </div>
     <div class="row">
@@ -15,6 +15,15 @@
                     <option value="{{this}}">{{this}}</option>
                     {{/each}}
                 </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="past-inventory">Past Inventories:</label>
+            <select class="form-control" id="past-inventory">
+                <option value="" selected>select month...</option>
+                {{#each inventories}}
+                <option value="{{month}}">{{month}}</option>
+                {{/each}}
+            </select>
         </div>
     </div>
     <table class="table table-bordered table-striped table-hover table-responsive" id="inventory">
@@ -30,7 +39,7 @@
         </thead>
         
         <tbody>
-            {{#each getMonthlyOrdering}}
+            {{#each getMonthlyOrdering month}}
             <tr>
                 <td data-field="productId" class="hidden">{{productId}}</td>
                 <td data-field="place">{{place}}</td>

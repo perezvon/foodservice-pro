@@ -105,3 +105,12 @@
       name: 'inventory',
       template: 'inventory'
     });
+
+    Router.route('/inventory/:month', {
+      name: 'pastInventory',
+      template: 'inventory',
+        data: function () {
+            let month = this.params.month;
+            return Inventory.findOne({month: month});
+        }
+    });
