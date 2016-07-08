@@ -1,11 +1,11 @@
-Template.inventory.onRendered(function(){
+Template.inventory.onRendered(function () {
     Session.set('uploadCommand', 'newInventory');
     Session.set('place', '');
-       $('#inventory tbody').editableTableWidget();
+    $('#inventory tbody').editableTableWidget();
 });
 
 Template.inventory.helpers({
-   getMonthlyOrdering (currentMonth) {
+   	getMonthlyOrdering (currentMonth) {
        //get all items ordered in current month
        
        var month; 
