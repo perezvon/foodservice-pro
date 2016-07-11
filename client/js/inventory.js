@@ -64,7 +64,7 @@ Template.inventory.events({
     'change #place': function (e) {
         let place = $(e.target).val();
         Session.set('place', place);
-        
+        $("#inventory tbody").editableTableWidget();
     }, 
     
     'change #past-inventory': function (e) {
