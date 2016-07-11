@@ -5,12 +5,16 @@ Template.inventory.onRendered(function () {
 });
 
 Template.inventory.helpers({
-   	getMonthlyOrdering (currentMonth) {
+   	getMonthlyOrdering () {
+		var currentMonth = Template.currentData();
+       var month = (currentMonth ? currentMonth : moment().format("MM"));
+       console.log(month);
+		//check whether there is an Inventory for the selected month
+		var isInventory = Inventory.findOne({month: month}); 
+		if (isInventory) {
+			return isInventory.inventory;
+		} else {
        //get all items ordered in current month
-       
-       var month; 
-       if (currentMonth) month = currentMonth;
-       else month = moment().format("MM");
        var year = moment().format("YYYY");
        var monthStart = new Date(year, (month - 1), 1);
        var monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
@@ -36,6 +40,7 @@ Template.inventory.helpers({
        }
        $("#inventory tbody").editableTableWidget();
        return ordering;
+		}
    },
    
    getMonth() {

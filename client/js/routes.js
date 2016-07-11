@@ -111,6 +111,6 @@
       template: 'inventory',
         data: function () {
             let month = this.params.month;
-            return Inventory.findOne({month: month});
-        }
+			return month;
+		}
     });
