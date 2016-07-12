@@ -2,6 +2,7 @@ Template.inventory.onRendered(function () {
     Session.set('uploadCommand', 'newInventory');
     Session.set('place', '');
     $('#inventory tbody').editableTableWidget();
+	$('#export').button();
 });
 
 Template.inventory.helpers({
