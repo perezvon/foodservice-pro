@@ -2,7 +2,6 @@ Template.inventory.onRendered(function () {
     Session.set('uploadCommand', 'newInventory');
     Session.set('place', '');
     $('#inventory tbody').editableTableWidget();
-	$('#export').button();
 });
 
 Template.inventory.helpers({
@@ -75,7 +74,6 @@ Template.inventory.events({
     
 	'click #export': function (e) {
 		e.preventDefault();
-		$(e.target).button('loading');
 		let inventoryData = Template.inventory.__helpers.get('getMonthlyOrdering').call();	
 		Meteor.call('exportToCSV', inventoryData, function (err, res) {
 					if (err) {
@@ -88,7 +86,6 @@ var tempLink = document.createElement('a');
 tempLink.href = csvURL;
 tempLink.setAttribute('download', 'export.csv');
 tempLink.click();
-				$(e.target).button('reset');
 			}
 		}
 					});
