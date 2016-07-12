@@ -36,3 +36,4 @@ chart:chart
 iron:middleware-stack@1.1.0
 bryanmorgan:webshot
 meteorhacks:ssr
+pfafman:filesaver

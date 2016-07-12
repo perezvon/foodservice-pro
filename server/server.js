@@ -104,6 +104,10 @@ parseUpload (data, command) {
     }
     }
   },
+	
+exportToCSV (data) {
+	return Papa.unparse(data);
+},	
     
 printPDF (page, file) {
     webshot(page, file, function (err) {
@@ -111,6 +115,7 @@ printPDF (page, file) {
     console.log('Saved to PDF');
 });
 },
+	
     
 standardizeDate (date) {
     date = moment(date).toDate();

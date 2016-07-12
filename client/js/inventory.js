@@ -8,7 +8,6 @@ Template.inventory.helpers({
    	getMonthlyOrdering () {
 		var currentMonth = Template.currentData();
        var month = (currentMonth ? currentMonth : moment().format("MM"));
-       console.log(month);
 		//check whether there is an Inventory for the selected month
 		var isInventory = Inventory.findOne({month: month}); 
 		if (isInventory) {
@@ -44,7 +43,8 @@ Template.inventory.helpers({
    },
    
    getMonth() {
-    return moment().format("MMMM YYYY");
+	   let currentMonth = (Template.currentData() ? moment(Template.currentData()).format("MMMM") + " 2016" : moment().format("MMMM YYYY"));
+    return currentMonth;
    },
     inventories () {
       return Inventory.find().fetch();  
@@ -72,8 +72,30 @@ Template.inventory.events({
         currentInventory.month = $(e.target).val();        Router.go('pastInventory', currentInventory);
     },
     
+	'click #export': function (e) {
+		e.preventDefault();
+		$(e.target).button('loading');
+		let inventoryData = Template.inventory.__helpers.get('getMonthlyOrdering').call();	
+		Meteor.call('exportToCSV', inventoryData, function (err, res) {
+					if (err) {
+			Bert.alert(err.reason, 'warning');
+		} else {
+			if (res) {
+				var csvData = new Blob([res], {type: 'text/csv;charset=utf-8;'});
+var csvURL = window.URL.createObjectURL(csvData);
+var tempLink = document.createElement('a');
+tempLink.href = csvURL;
+tempLink.setAttribute('download', 'export.csv');
+tempLink.click();
+				$(e.target).button('reset');
+			}
+		}
+					});
+	},
+	
     'click .save': function (e) {
         e.preventDefault();
+		$(e.target).button('loading');
         let result = {};
         let month = moment().format("MM");
         let inventory = [];
