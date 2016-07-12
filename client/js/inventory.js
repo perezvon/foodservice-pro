@@ -27,7 +27,9 @@ Template.inventory.helpers({
         if (parseInt(obj.qty) > 0) return true;
        });
        ordering = ordering.concat(stock).sort(function(a, b){
+		   if (a.name) {
                return a.name.localeCompare(b.name);
+		   }
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
        }
