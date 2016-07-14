@@ -51,7 +51,7 @@
                 <td data-field="pack">{{pack}}</td>
                 <td data-field="size">{{size}}</td>
                 <td data-field="unit">{{unit}}</td>
-                <td data-field="qty">{{qty}}</td>
+                <td data-field="qty">{{#if isInventory}}{{qty}}{{/if}}</td>
             </tr>
             {{/each}}
         </tbody>
