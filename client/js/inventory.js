@@ -8,7 +8,7 @@ Template.inventory.helpers({
 	isInventory () {
 		let currentMonth = Template.currentData();
 		let month = (currentMonth ? currentMonth : moment().format("MM"));
-		let isInventory = Inventory.fincOne({month: month});
+		let isInventory = Inventory.findOne({month: month});
 		if (isInventory) return true;
 		else return false;
 	}
