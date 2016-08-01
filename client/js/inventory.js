@@ -11,7 +11,7 @@ Template.inventory.helpers({
 		let isInventory = Inventory.findOne({month: month});
 		if (isInventory) return true;
 		else return false;
-	}
+	},
 	
    	getMonthlyOrdering () {
 		var currentMonth = Template.currentData();
