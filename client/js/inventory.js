@@ -29,7 +29,8 @@ Template.inventory.helpers({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
         }).fetch();
        
-       let stock = Inventory.findOne({month: month-1});
+		let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
+       let stock = Inventory.findOne({month: lastMonth});
        if (stock){
            stock = stock.inventory.filter(function(obj){
         if (parseInt(obj.qty) > 0) return true;
@@ -103,9 +104,8 @@ tempLink.click();
 	
     'click .save': function (e) {
         e.preventDefault();
-		$(e.target).button('loading');
         let result = {};
-        let month = moment().format("MM");
+        let currentMonth = Template.currentData();
         let inventory = [];
         $('#inventory tbody tr').each(function(){
             $this = $(this);
@@ -118,9 +118,9 @@ tempLink.click();
                 });
             inventory.push(data);
         });
-            result.month = month;
+            result.month = currentMonth;
             result.inventory = inventory;
-            Meteor.call('newInventory', result, function(error){
+            Meteor.call('saveInventory', currentMonth, result, function(error){
                 if (error) Bert.alert(error.reason, 'danger');
                 else {
                     Bert.alert('Inventory saved.', 'success');
