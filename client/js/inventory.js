@@ -24,9 +24,17 @@ Template.inventory.helpers({
        		if (place) {
 				return thisMonthInventory.filter(function(a){
                if (a.place == place) return true;
+           }).sort(function(a, b){
+		   if (a.name) {
+               return a.name.localeCompare(b.name);
+		   }
            });
 			} else {
-				return thisMonthInventory;
+				return thisMonthInventory.sort(function(a, b){
+		   if (a.name) {
+               return a.name.localeCompare(b.name);
+		   }
+           });
 			}
 		} else {
        //get all items ordered in current month
