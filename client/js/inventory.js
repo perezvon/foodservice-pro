@@ -14,12 +14,20 @@ Template.inventory.helpers({
 	},
 	
    	getMonthlyOrdering () {
-		var currentMonth = Template.currentData();
-       var month = (currentMonth ? currentMonth : moment().format("MM"));
+		let currentMonth = Template.currentData();
+       let month = (currentMonth ? currentMonth : moment().format("MM"));
 		//check whether there is an Inventory for the selected month
-		var isInventory = Inventory.findOne({month: month}); 
+		let isInventory = Inventory.findOne({month: month}); 
 		if (isInventory) {
-			return isInventory.inventory;
+			let thisMonthInventory = isInventory.inventory;
+			let place = Session.get('place');
+       		if (place) {
+				return thisMonthInventory.filter(function(a){
+               if (a.place == place) return true;
+           });
+			} else {
+				return thisMonthInventory;
+			}
 		} else {
        //get all items ordered in current month
        var year = moment().format("YYYY");
@@ -33,7 +41,7 @@ Template.inventory.helpers({
        let stock = Inventory.findOne({month: lastMonth});
        if (stock){
            stock = stock.inventory.filter(function(obj){
-        if (parseInt(obj.qty) > 0) return true;
+        if (parseFloat(obj.qty) > 0) return true;
        });
        ordering = ordering.concat(stock).sort(function(a, b){
 		   if (a.name) {

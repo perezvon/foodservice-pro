@@ -84,7 +84,7 @@ addComponentToMenuItem (item, data){
 
 parseUpload (data, command) {
     check(data, Array);
-    if (command == 'newInventory') {
+    if (command == 'saveInventory') {
         let month = moment().format("MM");
         month--;
         Meteor.call(command, {'month': month, 'inventory': data});
