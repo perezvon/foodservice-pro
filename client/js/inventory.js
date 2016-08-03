@@ -25,12 +25,12 @@ Template.inventory.helpers({
 				return thisMonthInventory.filter(function(a){
                if (a.place == place) return true;
            }).sort(function(a, b){
-					return a.place - b.place ||
+					return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
            });
 			} else {
 				return thisMonthInventory.sort(function(a, b){
-					return a.place - b.place ||
+					return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
            });
 			}
