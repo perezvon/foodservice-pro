@@ -36,10 +36,10 @@ Template.inventory.helpers({
 			}
 		} else {
        //get all items ordered in current month
-       var year = moment().format("YYYY");
-       var monthStart = new Date(year, (month - 1), 1);
-       var monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
-        var ordering = Ordering.find({
+       let year = moment().format("YYYY");
+       let monthStart = new Date(year, (month - 1), 1);
+       let monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
+        let ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
         }).fetch();
        
@@ -50,13 +50,12 @@ Template.inventory.helpers({
         if (parseFloat(obj.qty) > 0) return true;
        });
        ordering = ordering.concat(stock).sort(function(a, b){
-		   if (a.name) {
-               return a.name.localeCompare(b.name);
-		   }
+		   return a.place.localeCompare(b.place) ||
+                a.name.localeCompare(b.name);
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
        }
-       var place = Session.get('place');
+       let place = Session.get('place');
        if (place) {
            ordering = ordering.filter(function(a){
                if (a.place == place) return true;
