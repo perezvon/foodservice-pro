@@ -1,5 +1,5 @@
 Template.inventory.onRendered(function () {
-    Session.set('uploadCommand', 'newInventory');
+    Session.set('uploadCommand', 'saveInventory');
     Session.set('place', '');
     $('#inventory tbody').editableTableWidget();
 });
