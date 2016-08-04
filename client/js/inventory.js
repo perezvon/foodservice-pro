@@ -25,13 +25,17 @@ Template.inventory.helpers({
 				return thisMonthInventory.filter(function(a){
                if (a.place == place) return true;
            }).sort(function(a, b){
+                    if (a.place && a. name){
 					return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
+                    }
            });
 			} else {
 				return thisMonthInventory.sort(function(a, b){
+                    if (a.place && a. name){
 					return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
+                    }
            });
 			}
 		} else {
@@ -50,8 +54,10 @@ Template.inventory.helpers({
         if (parseFloat(obj.qty) > 0) return true;
        });
        ordering = ordering.concat(stock).sort(function(a, b){
+           if (a.place && a. name){
 		   return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
+           }
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
        }
@@ -108,7 +114,7 @@ Template.inventory.events({
 var csvURL = window.URL.createObjectURL(csvData);
 var tempLink = document.createElement('a');
 tempLink.href = csvURL;
-tempLink.setAttribute('download', 'export.csv');
+tempLink.setAttribute('download', 'inventory.csv');
 tempLink.click();
 			}
 		}
