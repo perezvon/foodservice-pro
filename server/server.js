@@ -87,7 +87,7 @@ parseUpload (data, command) {
     if (command == 'saveInventory') {
         let month = moment().format("MM");
         month--;
-        Meteor.call(command, {'month': month, 'inventory': data});
+        Meteor.call(command, {month: month}, {$set:{inventory: data}});
     } 
     else if (command == 'updateOrderGuide') {
         for (let i = 0; i < data.length; i++){
