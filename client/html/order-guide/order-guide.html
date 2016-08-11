@@ -39,7 +39,7 @@
     <tbody>
       <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=orderingIndex }}
-  <tr class="ordering-guide-view" data-id="{{_id}}">
+  <tr class="ordering-guide-view {{#if ordered _id}} success {{/if}}" data-id="{{_id}}">
   <td data-field="vendor">{{vendor}}</td>
   <td data-field="productId">{{productId}}</td>
   <td data-field="name">{{name}}</td>

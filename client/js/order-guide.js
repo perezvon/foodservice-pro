@@ -34,6 +34,10 @@ Template.orderGuide.helpers({
         var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
         }
+    },
+    
+    ordered (item) {
+        return Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}});
     }
 });
 
