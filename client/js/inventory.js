@@ -49,6 +49,7 @@ Template.inventory.helpers({
        
 		let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
        let stock = Inventory.findOne({month: lastMonth});
+            console.log(stock);
        if (stock){
            stock = stock.inventory.filter(function(obj){
         if (parseFloat(obj.qty) > 0) return true;
