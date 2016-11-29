@@ -62,6 +62,10 @@ newOrderGuideItem (data) {
     Ordering.insert(data);
 },
 
+editOrderGuideItem (item, data) {
+    Ordering.update(item, data);
+},    
+
 saveInventory (month, data){
   Inventory.update({month: month}, data, {upsert: true});
 },    

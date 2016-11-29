@@ -85,3 +85,10 @@ Template.viewOrderGuideItem.helpers ({
         }
     }
 });
+
+Template.viewOrderGuideItem.events({
+   'click #edit-og-item' (e) {
+       e.preventDefault();
+       Router.go('editOrderGuideItem', {_id: this._id});
+   } 
+});

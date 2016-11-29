@@ -1,4 +1,12 @@
-Template.newOrderGuideItem.helpers({
+Template.orderGuideItem.helpers({
+    buttonText() {
+      if (this._id) return "Save Item";
+        else return "Create Item";
+    },
+    isSelected(value, property) {
+        var selected = Template.parentData(1)[property];
+      if (value == selected) return 'selected';
+    },
     vendors() {
        var distinctEntries = _.uniq(Ordering.find({}, {
         sort: {vendor: 1}, fields: {vendor: true}
@@ -49,7 +57,7 @@ Template.newOrderGuideItem.helpers({
    }
 });
 
-Template.newOrderGuideItem.events({
+Template.orderGuideItem.events({
    'submit form': function(e) {
        e.preventDefault();
        var inputs;
@@ -60,6 +68,16 @@ Template.newOrderGuideItem.events({
         for (var i=0; i< inputs.length; i++){
             data[inputs.get([i]).id] = inputs.get([i]).value;
         }
+       if (this._id) {
+           var item = {_id: this._id};
+           Meteor.call('editOrderGuideItem', item, data, function(error){
+               if (error) Bert.alert(error.reason, 'danger');
+               else {
+                   Bert.alert('Item updated.', 'success');
+                   Router.go('orderGuide');
+               }
+           });
+       } else {
         Meteor.call('newOrderGuideItem', data, function(error){
                if (error) Bert.alert(error.reason, 'danger');
                else {
@@ -67,5 +85,6 @@ Template.newOrderGuideItem.events({
                    Router.go('newInvoice');
                }
            });
+       }
    } 
 });

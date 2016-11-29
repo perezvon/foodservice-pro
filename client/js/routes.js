@@ -89,7 +89,20 @@
       }
     });
 
-    Router.route('/newOrderGuideItem');
+
+    Router.route('/orderGuide/edit/:_id', {
+      name: 'editOrderGuideItem',
+      template: 'orderGuideItem',
+      data: function() {
+        var currentOrderGuideItem = this.params._id;
+        return Ordering.findOne({_id: currentOrderGuideItem});
+      }
+    });
+
+    Router.route('/newOrderGuideItem', {
+        name: 'newOrderGuideItem',
+        template: 'orderGuideItem'
+    });
     
     Router.route('/prep', {
       name: 'newPrep',
