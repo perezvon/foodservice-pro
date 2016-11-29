@@ -66,11 +66,13 @@ Template.orderGuideItem.events({
             inputs = ($(this).find(':input'));
         });
         for (var i=0; i< inputs.length; i++){
+            if (inputs.get([i]).id !== "") {
             data[inputs.get([i]).id] = inputs.get([i]).value;
+            }
         }
        if (this._id) {
            var item = {_id: this._id};
-           Meteor.call('editOrderGuideItem', item, data, function(error){
+           Meteor.call('editOrderGuideItem', item, {$set:data}, function(error){
                if (error) Bert.alert(error.reason, 'danger');
                else {
                    Bert.alert('Item updated.', 'success');
