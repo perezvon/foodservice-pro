@@ -32,7 +32,6 @@ reactive-var
 fortawesome:fontawesome
 check
 peppelg:bootstrap-3-modal
-chart:chart
 iron:middleware-stack@1.1.0
 bryanmorgan:webshot
 meteorhacks:ssr

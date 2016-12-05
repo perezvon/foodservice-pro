@@ -11,6 +11,12 @@
 thead {
   font-weight: bold; }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
 .tag {
   background: #eee;
   border-radius: 3px;
@@ -22,5 +28,17 @@ thead {
   position: relative;
   margin: 0 10px 10px 0;
   text-decoration: none; }
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 180px;					
+    height: 55px;					
+    padding: 2px;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
 
 /*# sourceMappingURL=foodservice-pro.css.map */

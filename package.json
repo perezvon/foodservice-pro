@@ -1,0 +1,11 @@
+{
+  "name": "foodservice-pro",
+  "version": "0.1.0",
+  "description": "Free and open source catering software.",
+  "dependencies": {
+    "eslint": "^3.11.1",
+    "d3":   "^4.4.0" 
+  },
+  "author": "perezvon",
+  "license": "MIT"
+}

@@ -1,0 +1,41 @@
+<template name="viewOrderGuideItem">
+    <div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{name}}</h4>
+      </div>
+      <div class="modal-body">
+    <div class="row">
+        <h4 class="col-md-6">Price History:</h4>
+    </div>
+    <div class="row">
+          <svg class="col-md-10 col-md-offset-1" id="priceTrend"></svg>
+    </div>
+    <div class="row">
+        <h4 class="col-md-3">Inventory Info:</h4> 
+        <button class="btn btn-default" id="edit-og-item" data-dismiss="modal" aria-label="Edit">Edit Item</button>
+    </div>
+    <div class="row">
+        <p class="col-md-3">Category: {{category}}</p>
+    </div>
+    <div class="row">
+        <p class="col-md-3">Subcategory: {{subcategory}}</p>
+    </div>
+     <div class="row">
+        <p class="col-md-3">Place: {{place}}</p>
+    </div>
+    <div class="row">
+        <p class="col-md-3">Inv Code: {{inventoryCode}}</p>
+    </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+    
+    
+    <!--Order Frequency
+    Menu Item Use-->
+    
+</template>
