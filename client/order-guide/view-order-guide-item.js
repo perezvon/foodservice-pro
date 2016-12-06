@@ -18,7 +18,10 @@ Template.viewOrderGuideItem.onRendered (function () {
     height = 360 - margin.top - margin.bottom;
     
     var formatTime = d3.timeFormat("%B %d, %Y");
-
+    var priceExtent = d3.extent(trend, function(d) { return d.price; });
+    var priceDelta = priceExtent[0] / priceExtent[1];
+// style y axis based on price delta
+    
 var x = d3.scaleTime()
     .range([0, width]);
 
@@ -47,7 +50,7 @@ var chart = d3.select("#priceTrend")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain(d3.extent(trend, function(d) { return d.date; }));
-  y.domain(d3.extent(trend, function(d) { return d.price; }));
+  y.domain(priceExtent);
     
   chart.append("g")
       .attr("class", "x axis")
