@@ -6,7 +6,7 @@ Template.inventory.onRendered(function () {
 
 Template.inventory.helpers({
 	isInventory () {
-		let currentMonth = Template.currentData();
+		let currentMonth = Template.currentData().month;
 		let month = (currentMonth ? currentMonth : moment().format("MM"));
 		let isInventory = Inventory.findOne({month: month});
 		if (isInventory) return true;
@@ -14,12 +14,14 @@ Template.inventory.helpers({
 	},
 	
    	getMonthlyOrdering () {
-		let currentMonth = Template.currentData();
-       let month = (currentMonth ? currentMonth : moment().format("MM"));
+       let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
+        let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
+        console.log('month: ' + month + '\n year: ' + year);
 		//check whether there is an Inventory for the selected month
-		let isInventory = Inventory.findOne({month: month}); 
+		let isInventory = Inventory.findOne({year: year, month: month}); 
 		if (isInventory) {
 			let thisMonthInventory = isInventory.inventory;
+            console.log('thisMonthInventory: ' + thisMonthInventory);
 			let place = Session.get('place');
        		if (place) {
 				return thisMonthInventory.filter(function(a){
@@ -40,16 +42,17 @@ Template.inventory.helpers({
 			}
 		} else {
        //get all items ordered in current month
-       let year = moment().format("YYYY");
+       let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
        let monthStart = new Date(year, (month - 1), 1);
        let monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
+            console.log(monthStart, monthEnd);
         let ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
         }).fetch();
        
 		let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
+            if (lastMonth === "00") lastMonth = "12";
        let stock = Inventory.findOne({month: lastMonth});
-            console.log(stock);
        if (stock){
            stock = stock.inventory.filter(function(obj){
         if (parseFloat(obj.qty) > 0) return true;
@@ -74,7 +77,7 @@ Template.inventory.helpers({
    },
    
    getMonth() {
-	   let currentMonth = (Template.currentData() ? moment(Template.currentData()).format("MMMM") + " 2016" : moment().format("MMMM YYYY"));
+	   let currentMonth = (Template.currentData() ? moment(Template.currentData().month).format("MMMM") + " " + Template.currentData().year : moment().format("MMMM YYYY"));
     return currentMonth;
    },
     inventories () {
@@ -100,7 +103,10 @@ Template.inventory.events({
     
     'change #past-inventory': function (e) {
         let currentInventory = {};
-        currentInventory.month = $(e.target).val();        Router.go('pastInventory', currentInventory);
+        currentInventory.year = $(e.target).val().slice(0,4);
+        currentInventory.month = $(e.target).val().slice(4);      
+        console.log(currentInventory);
+        Router.go('pastInventory', {year: currentInventory.year, month: currentInventory.month});
     },
     
 	'click #export': function (e) {
