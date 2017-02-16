@@ -31,7 +31,8 @@ Tags = new Mongo.Collection('tags');
     collection: Ordering,
     fields: ['name', 'productId'],
     defaultSearchOptions: {
-        limit: 100
+        limit: 100,
+		sortBy: ''
     },
     engine: new EasySearch.Minimongo({
         selector (searchObject, options, aggregation) {
@@ -44,7 +45,30 @@ Tags = new Mongo.Collection('tags');
                 selector.place = options.search.props.place;
             }
             return selector;
-        }
+        },
+		sort: function (searchObject, options) {
+      		const sortBy = options.search.props.sortBy;
+			switch (sortBy) {
+				case 'priceDesc':
+					return {price: -1}
+					break;
+				case 'priceAsc': 
+					return {price: 1}
+					break;
+				case 'productIdDesc': 
+					return {productId: -1}
+					break;
+				case 'productIdAsc': 
+					return {productId: 1}
+					break;
+				case 'nameDesc': 
+					return {name: -1}
+					break;
+				case 'nameAsc': 
+					return {name: 1}
+					break;
+			}
+		}
     })
   });
 

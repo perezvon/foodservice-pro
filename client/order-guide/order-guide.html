@@ -25,21 +25,23 @@
 </div>
   <table class="table table-bordered table-striped table-hover table-responsive" id="order-guide">
       <thead>
-          <tr class="active">
-              <td>Vendor</td>
-              <td>Product #</td>
-              <td>Name</td>
-              <td>Pack</td>
-              <td>Size</td>
-              <td>Unit</td>
-              <td>Price</td>
+          <tr class="active table-header">
+              <td data-sort="vendor">Vendor</td>
+              <td data-sort="productId">Product #</td>
+              <td data-sort="name">Name</td>
+              <td data-sort="pack">Pack</td>
+              <td data-sort="size">Size</td>
+              <td data-sort="unit">Unit</td>
+              <td data-sort="price">Price</td>
               <td>Price / Unit</td>
+			  <td data-sort="lastOrdered">Last Ordered</td>
+	  		  <td data-sort="totalOrdered">Total Ordered</td>
           </tr>
       </thead>
     <tbody>
       <tr></tr> <!--for :nth-child table striping -->
    {{#EasySearch.Each index=orderingIndex }}
-  <tr class="ordering-guide-view {{#if ordered _id}} success {{/if}}" data-id="{{_id}}">
+  <tr class="ordering-guide-view {{conditionalStyling _id}}" data-id="{{_id}}">
   <td data-field="vendor">{{vendor}}</td>
   <td data-field="productId">{{productId}}</td>
   <td data-field="name">{{name}}</td>
@@ -48,13 +50,15 @@
   <td data-field="unit">{{unit}}</td>
   <td data-field="price">{{toCurrency price}}</td>
   <td>{{pricePerUnit price pack size unit}}</td>
+  <td>{{lastOrdered _id}}</td>
+  <td>{{orderQty _id}}</td>
+	  
   </tr>
   {{/EasySearch.Each}}
   </tbody>
   </table>
   {{> EasySearch.Pagination index=orderingIndex maxPages=10}}
   <!--<button class="btn btn-default add-line">Add Line</button>-->
-  <!--<button class="btn btn-default inventory">Inventory</button>-->
   {{else}}
   {{> loading}}
   {{/if}}

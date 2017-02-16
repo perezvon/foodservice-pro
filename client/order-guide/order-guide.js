@@ -8,6 +8,7 @@ Template.orderGuide.onRendered(function(){
      $('#order-guide tbody').editableTableWidget();
     });*/
     Session.set('uploadCommand', 'newOrderGuideItem');
+	Session.set('sortDirection', false);
     orderingIndex.getComponentMethods()
             .removeProps('vendor');
 });
@@ -36,9 +37,49 @@ Template.orderGuide.helpers({
         }
     },
     
-    ordered (item) {
-        return Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}});
-    }
+    conditionalStyling (item) {
+        let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}}).orderHistory;
+        if (currentItem) {
+                        let dates = [];
+                        for (let i = 0; i < currentItem.length; i++){
+                            dates.push(currentItem[i].date);
+                            }
+                        dates.sort(function(a, b){
+                        return b - a;
+                        });
+                        let lastOrderedDate = moment(dates[0]).format("MM/DD/YYYY");
+						let daysElapsed = moment().diff(lastOrderedDate, 'days');
+                    if (daysElapsed < 60) return 'success';
+					else if (daysElapsed > 60 && daysElapsed < 120) return 'warning';
+					else return 'error';
+		}
+    },
+	lastOrdered (item) {
+	let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}}).orderHistory;
+        if (currentItem) {
+                        let dates = [];
+                        for (let i = 0; i < currentItem.length; i++){
+                            dates.push(currentItem[i].date);
+                            }
+                        dates.sort(function(a, b){
+                        return b - a;
+                        });
+                        let lastOrderedDate = moment(dates[0]).format("MM/DD/YYYY");
+						let daysElapsed = moment().diff(lastOrderedDate, 'days');
+                    return lastOrderedDate;
+		}
+	},
+       orderQty (item) {
+	let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1, unit: 1, size: 1}});
+        if (currentItem) {          
+                    let totalOrdered = 0;
+                        for (let i = 0; i < currentItem.orderHistory.length; i++){
+                                totalOrdered += eval(currentItem.orderHistory[i].qty);
+                        }
+		   			let currentUnit = currentItem.unit === 'lb' && currentItem.size == 1 ? 'lb' : 'cs';
+                        return totalOrdered + ' ' + currentUnit;
+	   }
+	}
 });
 
 Template.orderGuide.events({
@@ -84,5 +125,10 @@ Template.orderGuide.events({
     'change select': function (e) {
         orderingIndex.getComponentMethods()
             .addProps('vendor', $(e.target).val());
-    }
+    },
+	'click .table-header > td': function (e) {
+		Session.set('sortDirection', !Session.get('sortDirection'));
+		const sortValue = Session.get('sortDirection') ? e.target.dataset.sort + 'Asc' : e.target.dataset.sort + 'Desc';
+		orderingIndex.getComponentMethods().addProps('sortBy', sortValue);
+	}
 });
