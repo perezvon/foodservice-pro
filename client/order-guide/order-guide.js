@@ -51,7 +51,7 @@ Template.orderGuide.helpers({
 						let daysElapsed = moment().diff(lastOrderedDate, 'days');
                     if (daysElapsed < 60) return 'success';
 					else if (daysElapsed > 60 && daysElapsed < 120) return 'warning';
-					else return 'error';
+					else return 'danger';
 		}
     },
 	lastOrdered (item) {
