@@ -1,0 +1,58 @@
+<template name="reports">
+	<ul class="nav nav-tabs">
+      <li role="presentation"><a href="#freq" aria-controls="freq" role="tab" data-toggle="tab">Most Frequently Ordered</a></li>
+      <li role="presentation"><a href="#priceFluct" aria-controls="priceFluct" role="tab" data-toggle="tab">Price Fluctuations</a></li>
+    </ul>
+    
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade" id="freq">
+		  <table class="table table-bordered table-striped table-hover table-responsive">
+      		<thead>
+          	<tr class="active table-header">
+				<td>Vendor</td>
+              <td>Product #</td>
+              <td>Name</td>
+	  		  <td>Total Ordered</td>
+          </tr>
+      </thead>
+			  <tbody>
+      <tr></tr> <!--for :nth-child table striping -->
+		  	{{#each freq}}
+			<tr class="ordering-guide-view">
+				<td>{{vendor}}</td>
+				<td>{{productId}}</td>
+				<td>{{name}}</td>
+				<td>{{orderFreq}}</td>
+			</tr>
+		  	{{/each}}
+			  </tbody>
+		  </table>
+		</div>
+      <div role="tabpanel" class="tab-pane fade" id="priceFluct">
+		  <table class="table table-bordered table-striped table-hover table-responsive">
+      		<thead>
+          	<tr class="active table-header">
+				<td>Vendor</td>
+              <td>Product #</td>
+              <td>Name</td>
+	  		  <td>Price Change</td>
+				<td>Price Change %</td>
+          </tr>
+      </thead>
+			  <tbody>
+      <tr></tr> <!--for :nth-child table striping -->
+		  {{#each priceFluct}}
+		<tr class="ordering-guide-view">
+			<td>{{vendor}}</td>
+		  <td>{{productId}}</td>
+		  <td>{{name}}</td>
+		  <td>${{diff}}</td>
+		  <td>{{pct}}%</td>
+				  </tr>
+			{{/each}}
+				  
+			  </tbody>
+		  </table>
+		</div>
+    </div>
+</template>

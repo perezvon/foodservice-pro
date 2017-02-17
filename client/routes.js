@@ -118,6 +118,10 @@
       name: 'inventory',
       template: 'inventory'
     });
+    Router.route('/reports', {
+      name: 'reports',
+      template: 'reports'
+    });
 
     Router.route('/inventory/:year/:month', {
       name: 'pastInventory',

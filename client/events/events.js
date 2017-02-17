@@ -34,7 +34,7 @@ Template.events.events({
         Router.go('editEvent', {_id: this._id}); 
       }
 });
-
+ 
 Template.editEvent.events({
     'click .nav-tabs a': function(e){
         e.preventDefault();

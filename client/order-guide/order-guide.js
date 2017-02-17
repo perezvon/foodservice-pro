@@ -121,6 +121,10 @@ Template.orderGuide.events({
    'click .inventory': function () {
        Router.go('inventory');
    },
+	
+	'click .reports': function () {
+       Router.go('reports');
+   },
     
     'change select': function (e) {
         orderingIndex.getComponentMethods()
