@@ -20,6 +20,7 @@ Template.upload.events({
             console.log( error.reason );
           } else {
             template.uploading.set( false );
+            console.log(Session.get('uploadCommand'))
             Bert.alert( 'Upload complete!', 'success', 'growl-top-right' );
           }
         });

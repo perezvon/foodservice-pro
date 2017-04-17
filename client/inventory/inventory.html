@@ -25,16 +25,17 @@
             <label for="past-inventory">Past Inventories:</label>
             <select class="form-control" id="past-inventory">
                 <option value="" selected>select month...</option>
-				<option value="201605">May 2016</option>
+				        <option value="201605">May 2016</option>
                 <option value="201606">June 2016</option>
-				<option value="201607">July 2016</option>
+				        <option value="201607">July 2016</option>
                 <option value="201608">August 2016</option>
                 <option value="201609">September 2016</option>
                 <option value="201610">October 2016</option>
                 <option value="201611">November 2016</option>
                 <option value="201612">December 2016</option>
                 <option value="201701">January 2017</option>
-				<option value="201702">February 2017</option>
+				        <option value="201702">February 2017</option>
+                <option value="201703">March 2017</option>
             </select>
         </div>
     </div>
@@ -49,7 +50,7 @@
                 <td>In Stock</td>
             </tr>
         </thead>
-        
+
         <tbody>
             {{#each getMonthlyOrdering}}
             <tr>

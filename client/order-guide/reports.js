@@ -9,9 +9,8 @@ Template.reports.helpers({
 		let priceFluct = Ordering.find({}).fetch();
 		priceFluct.forEach((e, i, a) => {
 			const qtyArr = a[i].orderHistory ? a[i].orderHistory.map(each => each.qty) : [];
-			const diff = Math.max(...qtyArr) - Math.min(...qtyArr);
+			const diff = Math.max(...qtyArr) - Math.min(...qtyArr).toFixed(2);
 			const pct = (Math.max(...qtyArr) / Math.min(...qtyArr) * 100).toFixed(2);
-			console.log(diff, pct);
 			!Number.isNaN(diff) && diff !== Infinity && diff !== -Infinity ? a[i].diff = diff : a[i].diff = 0;
 			!Number.isNaN(+pct) && pct !== Infinity && pct !== -Infinity ? a[i].pct = pct : a[i].pct = 0;
 		});
