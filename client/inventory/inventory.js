@@ -130,8 +130,8 @@ tempLink.click();
           newItem.unit = temp.unit;
         }
         updatedInventory.push(newItem);
-        Meteor.call('updateInventory', {month: month, year: year}, {inventory: updatedInventory})
       })
+      Meteor.call('updateInventory', {month: month, year: year}, {inventory: updatedInventory})
 	},
 
     'click .save': function (e) {
