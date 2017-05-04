@@ -125,6 +125,8 @@ tempLink.click();
         let temp = Ordering.findOne({_id: item._id});
         let newItem = item;
         if (temp) {
+          console.log(newItem.pack, newItem.size, newItem.unit)
+          console.log(temp.pack, temp.size, temp.unit)
           newItem.pack = temp.pack;
           newItem.size = temp.size;
           newItem.unit = temp.unit;
