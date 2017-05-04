@@ -124,9 +124,11 @@ tempLink.click();
       inventoryData.forEach(item => {
         let temp = Ordering.findOne({_id: item._id});
         let newItem = item;
-        newItem.pack = temp.pack;
-        newItem.size = temp.size;
-        newItem.unit = temp.unit;
+        if (temp) {
+          newItem.pack = temp.pack;
+          newItem.size = temp.size;
+          newItem.unit = temp.unit;
+        }
         updatedInventory.push(newItem);
         Meteor.call('updateInventory', {month: month, year: year}, {inventory: updatedInventory})
       })
@@ -135,7 +137,8 @@ tempLink.click();
     'click .save': function (e) {
         e.preventDefault();
         let result = {};
-        let currentMonth = Template.currentData();
+        let currentMonth = Template.currentData().month;
+        let currentYear = Template.currentData().year;
         let inventory = [];
         $('#inventory tbody tr').each(function(){
             $this = $(this);
@@ -149,8 +152,9 @@ tempLink.click();
             inventory.push(data);
         });
             result.month = currentMonth;
+            result.year = currentYear;
             result.inventory = inventory;
-            Meteor.call('saveInventory', currentMonth, result, function(error){
+            Meteor.call('saveInventory', {month: currentMonth, year: currentYear}, result, function(error){
                 if (error) Bert.alert(error.reason, 'danger');
                 else {
                     Bert.alert('Inventory saved.', 'success');
