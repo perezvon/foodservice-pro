@@ -115,6 +115,22 @@ tempLink.click();
 		}
 					});
 	},
+  'click #sync': function (e) {
+		e.preventDefault();
+		  let inventoryData = Template.inventory.__helpers.get('getMonthlyOrdering').call();
+      let updatedInventory = [];
+      let month = Template.currentData().month;
+      let year = Template.currentData().year;
+      inventoryData.forEach(item => {
+        let temp = Ordering.findOne({_id: item._id});
+        let newItem = item;
+        newItem.pack = temp.pack;
+        newItem.size = temp.size;
+        newItem.unit = temp.unit;
+        updatedInventory.push(newItem);
+        Meteor.call('updateInventory', {month: month, year: year}, {inventory: updatedInventory})
+      })
+	},
 
     'click .save': function (e) {
         e.preventDefault();

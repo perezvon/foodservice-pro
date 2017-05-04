@@ -78,6 +78,10 @@ updateOrderGuide (item, data){
   Ordering.update(item, data, {upsert: true});
 },
 
+updateInventory (inventory, data) {
+  Inventory.update(inventory, data);
+},
+
 addComponentToMenuItem (item, data){
     var component = Components.findOne({_id: data});
     var hasComponents = MenuItems.findOne({_id: item}).components;
