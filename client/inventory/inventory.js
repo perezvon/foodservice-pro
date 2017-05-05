@@ -117,23 +117,23 @@ tempLink.click();
 	},
   'click #sync': function (e) {
 		e.preventDefault();
-		  let inventoryData = Template.inventory.__helpers.get('getMonthlyOrdering').call();
       let updatedInventory = [];
-      let month = Template.currentData().month;
-      let year = Template.currentData().year;
-      inventoryData.forEach(item => {
-        let temp = Ordering.findOne({_id: item._id});
+      const month = Template.currentData().month;
+      const lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1)
+      const year = Template.currentData().year;
+      const inventoryData = Inventory.findOne({month: lastMonth, year: year});
+      if (inventoryData) inventoryData.inventory.forEach(item => {
+        let temp = Ordering.findOne({productId: item.productId});
         let newItem = item;
-        if (temp) {
-          console.log(newItem.pack, newItem.size, newItem.unit)
-          console.log(temp.pack, temp.size, temp.unit)
+        if (temp && temp.pack) {
           newItem.pack = temp.pack;
           newItem.size = temp.size;
           newItem.unit = temp.unit;
         }
         updatedInventory.push(newItem);
       })
-      Meteor.call('updateInventory', {month: month, year: year}, {inventory: updatedInventory})
+      Meteor.call('updateInventory', {month: lastMonth, year: year}, {$set: {inventory: updatedInventory}})
+      console.log(Ordering.findOne({productId: '4207858'}))
 	},
 
     'click .save': function (e) {
