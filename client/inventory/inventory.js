@@ -6,14 +6,14 @@ Template.inventory.onRendered(function () {
 
 Template.inventory.helpers({
    	getMonthlyOrdering () {
-       let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
-        let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
-		//check whether there is an Inventory for the selected month
-		let isInventory = Inventory.findOne({year: year, month: month});
-		if (isInventory) {
-			let thisMonthInventory = isInventory.inventory;
-			let place = Session.get('place');
-       		if (place) {
+      let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
+      let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
+  		//check whether there is an Inventory for the selected month
+  		let isInventory = Inventory.findOne({year: year, month: month});
+  		if (isInventory) {
+  			let thisMonthInventory = isInventory.inventory;
+  			let place = Session.get('place');
+         		if (place) {
 				return thisMonthInventory.filter(function(a){
                if (a.place == place) return true;
            }).sort(function(a, b){
@@ -22,9 +22,9 @@ Template.inventory.helpers({
                 a.name.localeCompare(b.name);
                     }
            });
-			} else {
-				return thisMonthInventory.sort(function(a, b){
-                    if (a.place && a. name){
+  			} else {
+  				return thisMonthInventory.sort(function(a, b){
+                      if (a.place && a. name){
 					return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
                     }
@@ -38,7 +38,6 @@ Template.inventory.helpers({
         let ordering = Ordering.find({
            orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
         }).fetch();
-
 		let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
             if (lastMonth === "00") lastMonth = "12";
        let stock = Inventory.findOne({month: lastMonth});
@@ -53,6 +52,10 @@ Template.inventory.helpers({
            }
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
+           ordering.forEach(function(item) {
+             item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : 0
+             console.log(item.orderedThisMonth)
+           })
        }
        let place = Session.get('place');
        if (place) {
@@ -64,6 +67,19 @@ Template.inventory.helpers({
        return ordering;
 		}
    },
+
+  /* getMonthlyOrderQty (id) {
+     let month, year;
+     if (Template.parentData(1)){
+       month = moment(Template.parentData(1).month).format("MM")
+       year = moment(Template.parentData(1).year).format("YYYY")
+   } else {
+     month = moment().format("MM");
+     year = moment().format("YYYY");
+   }
+   const inventory = Inventory.findOne({month: month, year: year})
+   console.log(inventory)
+ },*/
 
    getMonth() {
 	   let currentMonth = (Template.currentData() ? moment(Template.currentData().month).format("MMMM") + " " + Template.currentData().year : moment().format("MMMM YYYY"));
@@ -115,7 +131,7 @@ tempLink.click();
 		}
 					});
 	},
-  'click #sync': function (e) {
+  /*'click #sync': function (e) {
 		e.preventDefault();
       let updatedInventory = [];
       const month = Template.currentData().month;
@@ -134,7 +150,7 @@ tempLink.click();
       })
       Meteor.call('updateInventory', {month: lastMonth, year: year}, {$set: {inventory: updatedInventory}})
       console.log(Ordering.findOne({productId: '4207858'}))
-	},
+	},*/
 
     'click .save': function (e) {
         e.preventDefault();

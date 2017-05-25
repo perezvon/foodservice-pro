@@ -9,7 +9,6 @@
 	<div class="row">
 		<div class="col-md-3">
 			<button type="button" class="btn btn-default" data-loading-text="Exporting..." id="export">Export Data</button>
-      <button type="button" class="btn btn-default" data-loading-text="Syncing..." id="sync">Sync Data</button>
 		</div>
 	</div>
     <div class="row">
@@ -49,6 +48,7 @@
                 <td>Pack</td>
                 <td>Size</td>
                 <td>Unit</td>
+                <td># Ordered</td>
                 <td>In Stock</td>
             </tr>
         </thead>
@@ -62,7 +62,8 @@
                 <td data-field="pack">{{pack}}</td>
                 <td data-field="size">{{size}}</td>
                 <td data-field="unit">{{unit}}</td>
-                <td data-field="qty">{{qty}}</td>
+                <td data-field="orderedThisMonth">{{orderedThisMonth}}</td>
+                <td data-field="qty"></td>
             </tr>
             {{/each}}
         </tbody>
