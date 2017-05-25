@@ -54,7 +54,6 @@ Template.inventory.helpers({
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
            ordering.forEach(function(item) {
              item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : 0
-             console.log(item.orderedThisMonth)
            })
        }
        let place = Session.get('place');
@@ -67,19 +66,6 @@ Template.inventory.helpers({
        return ordering;
 		}
    },
-
-  /* getMonthlyOrderQty (id) {
-     let month, year;
-     if (Template.parentData(1)){
-       month = moment(Template.parentData(1).month).format("MM")
-       year = moment(Template.parentData(1).year).format("YYYY")
-   } else {
-     month = moment().format("MM");
-     year = moment().format("YYYY");
-   }
-   const inventory = Inventory.findOne({month: month, year: year})
-   console.log(inventory)
- },*/
 
    getMonth() {
 	   let currentMonth = (Template.currentData() ? moment(Template.currentData().month).format("MMMM") + " " + Template.currentData().year : moment().format("MMMM YYYY"));
