@@ -83,11 +83,11 @@ Template.orderGuide.helpers({
 	   }
 	},
   thisWeekEnd () {
-    return moment().endOf('Week').format('MMMM DD, YYYY')
+    return moment().subtract(7, 'days').endOf('Week').format('MMMM DD, YYYY')
   },
   weeklySpend () {
-    const currentWeekStart = moment().startOf('Week').toDate();
-    const currentWeekEnd = moment().endOf('Week').toDate();
+    const currentWeekStart = moment().subtract(7, 'days').startOf('Week').toDate();
+    const currentWeekEnd = moment().subtract(7, 'days').endOf('Week').toDate();
     let accumulator = 0;
     console.log(currentWeekStart, currentWeekEnd)
     const orderData = Ordering.find({
