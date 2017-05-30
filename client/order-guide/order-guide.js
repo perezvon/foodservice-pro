@@ -81,7 +81,28 @@ Template.orderGuide.helpers({
 		   			let currentUnit = currentItem.unit === 'lb' && currentItem.size == 1 ? 'lb' : 'cs';
                         return totalOrdered + ' ' + currentUnit;
 	   }
-	}
+	},
+  thisWeekEnd () {
+    return moment().endOf('Week').format('MMMM DD, YYYY')
+  },
+  weeklySpend () {
+    const currentWeekStart = moment().startOf('Week').toDate();
+    const currentWeekEnd = moment().endOf('Week').toDate();
+    let accumulator = 0;
+    console.log(currentWeekStart, currentWeekEnd)
+    const orderData = Ordering.find({
+       orderHistory: {$elemMatch:{date: {$gte: currentWeekStart, $lt: currentWeekEnd}}}
+    }, {fields: {orderHistory: 1}}).fetch();
+    const newData = orderData.map(x => x.orderHistory)
+    newData.forEach((arr) => {
+      arr.forEach(x => {
+        if (x.date >= currentWeekStart && x.date < currentWeekEnd) {
+          accumulator += parseFloat(x.price) * parseInt(x.qty)
+        }
+      })
+  })
+    return accumulator.toFixed(2);
+  }
 });
 
 Template.orderGuide.events({

@@ -1,6 +1,5 @@
 <template name="orderGuide">
 {{#if Template.subscriptionsReady}}
-{{> upload}}
 <div class="row">
   <div class="col-md-6">
     <button class="btn btn-default new-invoice">Enter New Invoice</button>
@@ -8,6 +7,9 @@
 	<button class="btn btn-default reports">Reports</button>
   </div>
 
+</div>
+<div class="row">
+  <div class="col-md-12"><span class="h1">Weekly Spend</span> <span class="h3">week ending {{thisWeekEnd}}:</span> <span class="h1 text-success">${{weeklySpend}}</span></div>
 </div>
 <div class="row">
   <div class="form-group col-md-6">
