@@ -1,0 +1,11 @@
+<template name="place">
+    <div class="form-group col-md-3">
+        <label for="place">Place: </label>
+            <select class="form-control" id="place">
+                <option value="" selected>All</option>
+                {{#each places}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+    </div>
+  </template>

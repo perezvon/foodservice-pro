@@ -11,16 +11,8 @@
 			<button type="button" class="btn btn-default" data-loading-text="Exporting..." id="export">Export Data</button>
 		</div>
 	</div>
-    <div class="row">
-        <div class="form-group col-md-3">
-            <label for="place">Place: </label>
-                <select class="form-control" id="place">
-                    <option value="" selected>All</option>
-                    {{#each places}}
-                    <option value="{{this}}">{{this}}</option>
-                    {{/each}}
-                </select>
-        </div>
+  <div class="row">
+    {{> place}}
         <div class="form-group col-md-3">
             <label for="past-inventory">Past Inventories:</label>
             <select class="form-control" id="past-inventory">
@@ -48,8 +40,9 @@
                 <td>Pack</td>
                 <td>Size</td>
                 <td>Unit</td>
-                <td># Ordered</td>
-                <td>In Stock</td>
+                <td>Last Month Stock</td>
+                <td># Ordered This Month</td>
+                <td>Current Stock</td>
             </tr>
         </thead>
 
@@ -62,6 +55,7 @@
                 <td data-field="pack">{{pack}}</td>
                 <td data-field="size">{{size}}</td>
                 <td data-field="unit">{{unit}}</td>
+                <td data-field="lastMonthStock">{{qty}}</td>
                 <td data-field="orderedThisMonth">{{orderedThisMonth}}</td>
                 <td data-field="qty"></td>
             </tr>

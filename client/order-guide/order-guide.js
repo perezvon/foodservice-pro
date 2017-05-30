@@ -25,21 +25,22 @@ Template.orderGuide.helpers({
     orderingIndex() { return orderingIndex; },
     'order-guide'() {
       return Ordering.find({});
-    }, 
+    },
     inputAttributes() {
       return {'class': 'form-control', 'id': 'search-ordering-guide'};
     },
-    
+
     pricePerUnit(price, pack, size, unit){
         if (price && pack && size) {
         var result =  (price / (pack * size)).toFixed(2);
         if (!isNaN(result)) return "$" + result + " / " + unit;
         }
     },
-    
+
     conditionalStyling (item) {
-        let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}}).orderHistory;
+        let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}});
         if (currentItem) {
+          currentItem = currentItem.orderHistory;
                         let dates = [];
                         for (let i = 0; i < currentItem.length; i++){
                             dates.push(currentItem[i].date);
@@ -55,8 +56,9 @@ Template.orderGuide.helpers({
 		}
     },
 	lastOrdered (item) {
-	let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}}).orderHistory;
+	let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1}});
         if (currentItem) {
+          currentItem = currentItem.orderHistory;
                         let dates = [];
                         for (let i = 0; i < currentItem.length; i++){
                             dates.push(currentItem[i].date);
@@ -71,7 +73,7 @@ Template.orderGuide.helpers({
 	},
        orderQty (item) {
 	let currentItem = Ordering.findOne({_id: item, orderHistory: {$exists: true}}, {fields: {orderHistory: 1, unit: 1, size: 1}});
-        if (currentItem) {          
+        if (currentItem) {
                     let totalOrdered = 0;
                         for (let i = 0; i < currentItem.orderHistory.length; i++){
                                 totalOrdered += eval(currentItem.orderHistory[i].qty);
@@ -88,22 +90,22 @@ Template.orderGuide.events({
        $('#order-guide > tbody:last-child').append('<tr class="ordering-guide-view" data-id="' + newId +'"><td data-field="itemId"></td><td data-field="name">New Item</td><td data-field="pack"></td><td data-field="price"></td><td></td></tr>');
         //until autorun works, make sure new item can be edited
     //   $('#order-guide tbody').editableTableWidget();
-       
-   }, 
-   
+
+   },
+
     'focus #order-guide tbody td': function (e) {
        var currentId = e.target.parentElement.dataset.id;
        //var currentId = (newId ? newId : this._id);
        Session.set('currentOrderGuideId', currentId);
    },
-   
+
    'click #order-guide tbody td': function (e) {
        var currentId = e.target.parentElement.dataset.id;
        Modal.show('viewOrderGuideItem', function(){
            return Ordering.findOne({_id: currentId});
-           });  
+           });
    },
-   
+
   'change #order-guide td': function(e, t){
        var currentId = Session.get('currentOrderGuideId');
        var field = e.target.dataset.field;
@@ -113,19 +115,19 @@ Template.orderGuide.events({
        Meteor.call('updateOrderGuide', {_id: currentId}, {$set: query});
        e.target.textContent = '';
    },
-   
+
    'click .new-invoice': function () {
        Router.go('newInvoice');
    },
-   
+
    'click .inventory': function () {
        Router.go('inventory');
    },
-	
+
 	'click .reports': function () {
        Router.go('reports');
    },
-    
+
     'change select': function (e) {
         orderingIndex.getComponentMethods()
             .addProps('vendor', $(e.target).val());

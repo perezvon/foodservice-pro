@@ -1,4 +1,4 @@
-<template name="orderGuide"> 
+<template name="orderGuide">
 {{#if Template.subscriptionsReady}}
 {{> upload}}
 <div class="row">
@@ -53,7 +53,7 @@
   <td>{{pricePerUnit price pack size unit}}</td>
   <td>{{lastOrdered _id}}</td>
   <td>{{orderQty _id}}</td>
-	  
+
   </tr>
   {{/EasySearch.Each}}
   </tbody>
@@ -64,4 +64,3 @@
   {{> loading}}
   {{/if}}
 </template>
-

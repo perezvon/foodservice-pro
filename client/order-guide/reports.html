@@ -3,9 +3,10 @@
       <li role="presentation"><a href="#freq" aria-controls="freq" role="tab" data-toggle="tab">Most Frequently Ordered</a></li>
       <li role="presentation"><a href="#priceFluct" aria-controls="priceFluct" role="tab" data-toggle="tab">Price Fluctuations</a></li>
     </ul>
-    
+
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade" id="freq">
+				{{> vendor}}
 		  <table class="table table-bordered table-striped table-hover table-responsive">
       		<thead>
           	<tr class="active table-header">
@@ -50,7 +51,7 @@
 		  <td>{{pct}}%</td>
 				  </tr>
 			{{/each}}
-				  
+
 			  </tbody>
 		  </table>
 		</div>

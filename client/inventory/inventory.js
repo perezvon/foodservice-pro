@@ -53,7 +53,7 @@ Template.inventory.helpers({
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
            ordering.forEach(function(item) {
-             item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : 0
+             item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
            })
        }
        let place = Session.get('place');
@@ -74,24 +74,9 @@ Template.inventory.helpers({
     inventories () {
       return Inventory.find().fetch();
     },
-
-    places() {
-       var distinctEntries = _.uniq(Ordering.find({}, {
-        sort: {place: 1}, fields: {place: true}
-        }).fetch().map(function(x) {
-            return x.place;
-        }), true);
-    return distinctEntries;
-   }
 });
 
 Template.inventory.events({
-    'change #place': function (e) {
-        let place = $(e.target).val();
-        Session.set('place', place);
-        $("#inventory tbody").editableTableWidget();
-    },
-
     'change #past-inventory': function (e) {
         let currentInventory = {};
         currentInventory.year = $(e.target).val().slice(0,4);
