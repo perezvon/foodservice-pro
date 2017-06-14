@@ -1,4 +1,6 @@
 <template name="reports">
+
+				{{> vendor}}
 	<ul class="nav nav-tabs">
       <li role="presentation"><a href="#freq" aria-controls="freq" role="tab" data-toggle="tab">Most Frequently Ordered</a></li>
       <li role="presentation"><a href="#priceFluct" aria-controls="priceFluct" role="tab" data-toggle="tab">Price Fluctuations</a></li>
@@ -6,7 +8,6 @@
 
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade" id="freq">
-				{{> vendor}}
 		  <table class="table table-bordered table-striped table-hover table-responsive">
       		<thead>
           	<tr class="active table-header">
