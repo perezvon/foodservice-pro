@@ -6,8 +6,7 @@ Template.reports.helpers({
 	freq () {
 		let orderFreq = Ordering.find({}).fetch();
 		orderFreq.forEach((each, index, arr) => {arr[index].orderFreq = arr[index].orderHistory ? arr[index].orderHistory.reduce((prev, curr) => { return prev+=parseInt(curr.qty)}, 0) : 0; })
-		orderFreq = orderFreq.sort((a,b) => {return b.orderFreq - a.orderFreq});
-		console.log(!!Session.get('vendor'))
+		orderFreq = orderFreq.filter((i) => !!i.orderFreq).sort((a,b) => {return b.orderFreq - a.orderFreq});
 		orderFreq = !!Session.get('vendor') ? orderFreq.filter((i) => i.vendor === Session.get('vendor')) : orderFreq;
 		return orderFreq;
 	},
