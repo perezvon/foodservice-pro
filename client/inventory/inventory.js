@@ -53,6 +53,7 @@ Template.inventory.helpers({
            });
            ordering = _.uniq(ordering, true, function(a){return a.productId;});
            ordering.forEach(function(item) {
+             item.qty = parseFloat(item.qty).toFixed(2)
              item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
            })
        }
