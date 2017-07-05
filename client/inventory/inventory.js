@@ -13,13 +13,19 @@ Template.inventory.helpers({
     getInventory () {
       let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
       let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
+      let lookupYear = year;
       let lastMonthStart = new Date(year, (month - 2), 1);
       let lastMonthEnd = new Date((month -1 === 11 ? year + 1 : year), (month -1  === 11 ? 0 : month -1), 1);
   		let thisMonthInventory = Inventory.findOne({year: year, month: month}).inventory;
       let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
-      if (lastMonth === "00") lastMonth = "12";
-      let stock = Inventory.findOne({month: lastMonth});
+      if (lastMonth === "00") {
+        lastMonth = "12";
+        lookupYear--;
+      }
+      let stock = Inventory.findOne({month: lastMonth, year: lookupYear});
       if (stock){
+
+        console.log(stock)
         thisMonthInventory.forEach(i => {
           let product = i.productId ? Ordering.findOne({productId: i.productId}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
