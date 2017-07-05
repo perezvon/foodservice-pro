@@ -24,16 +24,13 @@ Template.inventory.helpers({
       }
       let stock = Inventory.findOne({month: lastMonth, year: lookupYear});
       if (stock){
-
-        console.log(stock)
         thisMonthInventory.forEach(i => {
-          let product = i.productId ? Ordering.findOne({productId: i.productId}) : "";
+          let product = i.name ? Ordering.findOne({name: i.name}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
-          let wasOrdered = orderHistory ? orderHistory.filter(x => {x.date >= lastMonthStart && x.date < lastMonthEnd}) : "";
-          i.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => {a + parseInt(b.qty), 0}) : "";
-          let hasStock = _.find(stock.inventory, x => x.productId === i.productId);
-          i.lastMonthStock = hasStock ? hasStock.qty : "";
-          //console.log(i.orderedThisMonth)
+          let wasOrdered = orderHistory && !_.isEmpty(orderHistory) ? orderHistory.filter(x => x.date >= lastMonthStart && x.date < lastMonthEnd) : "";
+          i.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => a + parseInt(b.qty), 0) : "";
+          let hasStock = _.find(stock.inventory, x => x.name === i.name);
+          i.lastMonthStock = hasStock && hasStock.qty ? hasStock.qty : "";
         })
       }
 
