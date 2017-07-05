@@ -50,6 +50,21 @@
         </thead>
 
         <tbody>
+          {{#if isInventory}}
+            {{#each getInventory}}
+            <tr>
+                <td data-field="productId" class="hidden">{{productId}}</td>
+                <td data-field="place">{{place}}</td>
+                <td data-field="name">{{name}}</td>
+                <td data-field="pack">{{pack}}</td>
+                <td data-field="size">{{size}}</td>
+                <td data-field="unit">{{unit}}</td>
+                <td data-field="lastMonthStock">{{lastMonthStock}}</td>
+                <td data-field="orderedThisMonth">{{orderedThisMonth}}</td>
+                <td data-field="qty">{{qty}}</td>
+            </tr>
+            {{/each}}
+          {{else}}
             {{#each getMonthlyOrdering}}
             <tr>
                 <td data-field="productId" class="hidden">{{productId}}</td>
@@ -63,6 +78,7 @@
                 <td data-field="qty"></td>
             </tr>
             {{/each}}
+          {{/if}}
         </tbody>
     </table>
     <button class="btn btn-default save">Save</button>

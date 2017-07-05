@@ -5,67 +5,79 @@ Template.inventory.onRendered(function () {
 });
 
 Template.inventory.helpers({
-   	getMonthlyOrdering () {
+    isInventory () {
       let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
       let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
-  		//check whether there is an Inventory for the selected month
-  		let isInventory = Inventory.findOne({year: year, month: month});
-  		if (isInventory) {
-  			let thisMonthInventory = isInventory.inventory;
-  			let place = Session.get('place');
-         		if (place) {
-				return thisMonthInventory.filter(function(a){
-               if (a.place == place) return true;
-           }).sort(function(a, b){
-                    if (a.place && a. name){
-					return a.place.localeCompare(b.place) ||
-                a.name.localeCompare(b.name);
-                    }
-           });
-  			} else {
-  				return thisMonthInventory.sort(function(a, b){
-                      if (a.place && a. name){
-					return a.place.localeCompare(b.place) ||
-                a.name.localeCompare(b.name);
-                    }
-           });
-			}
-		} else {
+  		return !!Inventory.findOne({year: year, month: month});
+    },
+    getInventory () {
+      let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
+      let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
+      let lastMonthStart = new Date(year, (month - 2), 1);
+      let lastMonthEnd = new Date((month -1 === 11 ? year + 1 : year), (month -1  === 11 ? 0 : month -1), 1);
+  		let thisMonthInventory = Inventory.findOne({year: year, month: month}).inventory;
+      let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
+      if (lastMonth === "00") lastMonth = "12";
+      let stock = Inventory.findOne({month: lastMonth});
+      if (stock){
+        thisMonthInventory.forEach(i => {
+          let product = i.productId ? Ordering.findOne({productId: i.productId}) : "";
+          let orderHistory = product && product.orderHistory ? product.orderHistory : "";
+          let wasOrdered = orderHistory ? orderHistory.filter(x => {x.date >= lastMonthStart && x.date < lastMonthEnd}) : "";
+          i.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => {a + parseInt(b.qty), 0}) : "";
+          let hasStock = _.find(stock.inventory, x => x.productId === i.productId);
+          i.lastMonthStock = hasStock ? hasStock.qty : "";
+          //console.log(i.orderedThisMonth)
+        })
+      }
+
+  		let place = Session.get('place');
+      if (place) {
+			     return thisMonthInventory.filter(a => a.place === place)
+              .sort((a, b) => {
+                if (a.place && a. name) return a.place.localeCompare(b.place) || a.name.localeCompare(b.name);
+              });
+  		} else {
+  				return thisMonthInventory.sort((a, b) => {
+            if (a.place && a. name){
+					         return a.place.localeCompare(b.place) ||
+                   a.name.localeCompare(b.name);
+            }
+          });
+      }
+    },
+   	getMonthlyOrdering () {
        //get all items ordered in current month
+       let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
        let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
        let monthStart = new Date(year, (month - 1), 1);
        let monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
-        let ordering = Ordering.find({
-           orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
-        }).fetch();
-		let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
-            if (lastMonth === "00") lastMonth = "12";
+       let ordering = Ordering.find({
+         orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
+       }).fetch();
+		   let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
+       if (lastMonth === "00") lastMonth = "12";
        let stock = Inventory.findOne({month: lastMonth});
        if (stock){
-           stock = stock.inventory.filter(function(obj){
-        if (parseFloat(obj.qty) > 0) return true;
-       });
-       ordering = ordering.concat(stock).sort(function(a, b){
+           stock = stock.inventory.filter(obj => parseFloat(obj.qty) > 0);
+           ordering = ordering.concat(stock).sort((a, b) => {
            if (a.place && a. name){
-		   return a.place.localeCompare(b.place) ||
+		           return a.place.localeCompare(b.place) ||
                 a.name.localeCompare(b.name);
            }
-           });
-           ordering = _.uniq(ordering, true, function(a){return a.productId;});
-           ordering.forEach(function(item) {
-             item.qty = item.qty % 1 > 0 ? parseFloat(item.qty).toFixed(2) : item.qty
-             item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
-           })
+        });
+        ordering = _.uniq(ordering, true, function(a){return a.productId;});
+        ordering.forEach(item => {
+          item.qty = item.qty % 1 > 0 ? parseFloat(item.qty).toFixed(2) : item.qty
+          item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
+        })
        }
        let place = Session.get('place');
        if (place) {
-           ordering = ordering.filter(function(a){
-               if (a.place == place) return true;
-           });
+           ordering = ordering.filter(a => (a.place === place));
        }
        $("#inventory tbody").editableTableWidget();
        return ordering;
-		}
    },
 
    getMonth() {
