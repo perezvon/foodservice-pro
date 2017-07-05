@@ -102,7 +102,7 @@ Template.inventory.events({
 
 	'click #export': function (e) {
 		e.preventDefault();
-		let inventoryData = Template.inventory.__helpers.get('getMonthlyOrdering').call();
+		let inventoryData = Template.inventory.__helpers.get('getInventory').call();
 		Meteor.call('exportToCSV', inventoryData, function (err, res) {
 					if (err) {
 			Bert.alert(err.reason, 'warning');
