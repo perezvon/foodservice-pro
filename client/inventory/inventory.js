@@ -60,6 +60,8 @@ Template.inventory.helpers({
        }).fetch();
 		   let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
        if (lastMonth === "00") lastMonth = "12";
+       let lastMonthStart = new Date(year, (month - 2), 1);
+       let lastMonthEnd = new Date((month -1 === 11 ? year + 1 : year), (month -1  === 11 ? 0 : month -1), 1);
        let stock = Inventory.findOne({month: lastMonth});
        if (stock){
            stock = stock.inventory.filter(obj => parseFloat(obj.qty) > 0);
@@ -71,8 +73,12 @@ Template.inventory.helpers({
         });
         ordering = _.uniq(ordering, true, function(a){return a.productId;});
         ordering.forEach(item => {
+          let product = item.name ? Ordering.findOne({name: item.name}) : "";
+          let orderHistory = product && product.orderHistory ? product.orderHistory : "";
+          let wasOrdered = orderHistory && !_.isEmpty(orderHistory) ? orderHistory.filter(x => x.date >= lastMonthStart && x.date < lastMonthEnd) : "";
           item.qty = item.qty % 1 > 0 ? parseFloat(item.qty).toFixed(2) : item.qty
           item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
+          item.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => a + parseInt(b.qty), 0) : "";
         })
        }
        let place = Session.get('place');
@@ -102,7 +108,8 @@ Template.inventory.events({
 
 	'click #export': function (e) {
 		e.preventDefault();
-		let inventoryData = Template.inventory.__helpers.get('getInventory').call();
+    const hasInventory = Template.inventory.__helpers.get('isInventory').call();
+		let inventoryData = hasInventory ? Template.inventory.__helpers.get('getInventory').call() : Template.inventory.__helpers.get('getMonthlyOrdering').call();
 		Meteor.call('exportToCSV', inventoryData, function (err, res) {
 					if (err) {
 			Bert.alert(err.reason, 'warning');
