@@ -53,16 +53,18 @@ Template.inventory.helpers({
        //get all items ordered in current month
        let month = (Template.currentData() ? Template.currentData().month : moment().format("MM"));
        let year = (Template.currentData() ? Template.currentData().year : moment().format("YYYY"));
+       let lookupYear = year;
        let monthStart = new Date(year, (month - 1), 1);
        let monthEnd = new Date((month === 11 ? year + 1 : year), (month === 11 ? 0 : month), 1);
+       let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
+       if (lastMonth === "00") {
+         lastMonth = "12";
+         lookupYear--;
+       }
        let ordering = Ordering.find({
          orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
        }).fetch();
-		   let lastMonth = (month-1 < 10 ? "0" + (month-1) : month-1);
-       if (lastMonth === "00") lastMonth = "12";
-       let lastMonthStart = new Date(year, (month - 2), 1);
-       let lastMonthEnd = new Date((month -1 === 11 ? year + 1 : year), (month -1  === 11 ? 0 : month -1), 1);
-       let stock = Inventory.findOne({month: lastMonth});
+       let stock = Inventory.findOne({month: lastMonth, year: lookupYear});
        if (stock){
            stock = stock.inventory.filter(obj => parseFloat(obj.qty) > 0);
            ordering = ordering.concat(stock).sort((a, b) => {
@@ -71,16 +73,16 @@ Template.inventory.helpers({
                 a.name.localeCompare(b.name);
            }
         });
+      }
         ordering = _.uniq(ordering, true, function(a){return a.productId;});
         ordering.forEach(item => {
           let product = item.name ? Ordering.findOne({name: item.name}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
-          let wasOrdered = orderHistory && !_.isEmpty(orderHistory) ? orderHistory.filter(x => x.date >= lastMonthStart && x.date < lastMonthEnd) : "";
+          let wasOrdered = orderHistory && !_.isEmpty(orderHistory) ? orderHistory.filter(x => x.date >= monthStart && x.date < monthEnd) : "";
           item.qty = item.qty % 1 > 0 ? parseFloat(item.qty).toFixed(2) : item.qty
-          item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
+          //item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
           item.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => a + parseInt(b.qty), 0) : "";
         })
-       }
        let place = Session.get('place');
        if (place) {
            ordering = ordering.filter(a => (a.place === place));
