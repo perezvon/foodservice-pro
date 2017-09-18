@@ -149,6 +149,11 @@ Template.orderGuide.events({
        Router.go('reports');
    },
 
+   'click .cleanup': function () {
+     orderingIndex.getComponentMethods()
+      .addProps('showEmptyItems', true);
+   },
+
     'change select': function (e) {
         orderingIndex.getComponentMethods()
             .addProps('vendor', $(e.target).val());
