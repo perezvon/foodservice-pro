@@ -1,6 +1,12 @@
 <template name="reports">
 
 				{{> vendor}}
+				{{> category}}
+				<div class="row">
+					<div class="col-md-3">
+						<button type="button" class="btn btn-default" data-loading-text="Exporting..." id="export">Export Data</button>
+					</div>
+				</div>
 	<ul class="nav nav-tabs">
       <li role="presentation"><a href="#freq" aria-controls="freq" role="tab" data-toggle="tab">Most Frequently Ordered</a></li>
       <li role="presentation"><a href="#priceFluct" aria-controls="priceFluct" role="tab" data-toggle="tab">Price Fluctuations</a></li>
@@ -9,24 +15,26 @@
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade" id="freq">
 		  <table class="table table-bordered table-striped table-hover table-responsive">
-      		<thead>
-          	<tr class="active table-header">
-				<td>Vendor</td>
-              <td>Product #</td>
-              <td>Name</td>
-	  		  <td>Total Ordered</td>
-          </tr>
-      </thead>
+      	<thead>
+          <tr class="active table-header">
+						<td>Vendor</td>
+            <td>Product #</td>
+            <td>Name</td>
+	  	  		<td>Total Ordered</td>
+						<td>Price</td>
+        	</tr>
+    		</thead>
 			  <tbody>
-      <tr></tr> <!--for :nth-child table striping -->
-		  	{{#each freq}}
-			<tr class="ordering-guide-view">
-				<td>{{vendor}}</td>
-				<td>{{productId}}</td>
-				<td>{{name}}</td>
-				<td>{{orderFreq}}</td>
-			</tr>
-		  	{{/each}}
+	      	<tr></tr> <!--for :nth-child table striping -->
+			  		{{#each freq}}
+						<tr class="ordering-guide-view">
+						<td>{{vendor}}</td>
+						<td>{{productId}}</td>
+						<td>{{name}}</td>
+						<td>{{orderFreq}}</td>
+						<td>{{price}}</td>
+						</tr>
+			  		{{/each}}
 			  </tbody>
 		  </table>
 		</div>

@@ -1,5 +1,6 @@
 Template.reports.onCreated(() => {
 	Session.set('vendor', '')
+	Session.set('category', '')
 });
 
 Template.reports.helpers({
@@ -8,6 +9,7 @@ Template.reports.helpers({
 		orderFreq.forEach((each, index, arr) => {arr[index].orderFreq = arr[index].orderHistory ? arr[index].orderHistory.reduce((prev, curr) => { return prev+=parseInt(curr.qty)}, 0) : 0; })
 		orderFreq = orderFreq.filter((i) => !!i.orderFreq).sort((a,b) => {return b.orderFreq - a.orderFreq});
 		orderFreq = !!Session.get('vendor') ? orderFreq.filter((i) => i.vendor === Session.get('vendor')) : orderFreq;
+		orderFreq = !!Session.get('category') ? orderFreq.filter((i) => i.category === Session.get('category')) : orderFreq;
 		return orderFreq;
 	},
 	priceFluct () {
@@ -27,5 +29,23 @@ Template.reports.events({
     'click .nav-tabs a': function(e){
         e.preventDefault();
         $(this).tab('show');
-    }
+    },
+		'click #export': function (e) {
+			e.preventDefault();
+	    let data = Template.reports.__helpers.get('freq').call();
+			Meteor.call('exportToCSV', data, function (err, res) {
+				if (err) {
+					Bert.alert(err.reason, 'warning');
+				} else {
+					if (res) {
+						var csvData = new Blob([res], {type: 'text/csv;charset=utf-8;'});
+						var csvURL = window.URL.createObjectURL(csvData);
+						var tempLink = document.createElement('a');
+						tempLink.href = csvURL;
+						tempLink.setAttribute('download', 'order-frequency.csv');
+						tempLink.click();
+					}
+				}
+			});
+		}
 });

@@ -1,0 +1,11 @@
+<template name="category">
+    <div class="form-group col-md-3">
+        <label for="category">Category: </label>
+            <select class="form-control" id="category">
+                <option value="" selected>All</option>
+                {{#each categories}}
+                <option value="{{this}}">{{this}}</option>
+                {{/each}}
+            </select>
+    </div>
+  </template>
