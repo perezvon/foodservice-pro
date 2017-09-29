@@ -74,7 +74,9 @@ Template.inventory.helpers({
            }
         });
       }
-        ordering = _.uniq(ordering, true, function(a){return [a.productId, a.name];});
+      console.log(ordering)
+        ordering = _.uniq(ordering, true, a => {return {productId: a.productId, name: a.name}});
+        console.log(ordering)
         ordering.forEach(item => {
           let product = item.name ? Ordering.findOne({name: item.name}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
