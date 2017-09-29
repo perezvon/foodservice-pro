@@ -64,6 +64,7 @@ Template.inventory.helpers({
        let ordering = Ordering.find({
          orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
        }).fetch();
+       console.log(ordering)
        let stock = Inventory.findOne({month: lastMonth, year: lookupYear});
        if (stock){
            stock = stock.inventory.filter(obj => parseFloat(obj.qty) > 0);
@@ -74,7 +75,7 @@ Template.inventory.helpers({
            }
         });
       }
-        ordering = _.uniq(ordering, true, function(a){return a.productId;});
+        ordering = _.uniq(ordering, true, function(a){return a.productId && a.name;});
         ordering.forEach(item => {
           let product = item.name ? Ordering.findOne({name: item.name}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
