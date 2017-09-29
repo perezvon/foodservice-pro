@@ -74,9 +74,7 @@ Template.inventory.helpers({
            }
         });
       }
-      console.log(ordering)
-        ordering = _.uniq(ordering, true, a => {return {productId: a.productId, name: a.name}});
-        console.log(ordering)
+        ordering = _.uniq(ordering, true, elem => {return !!elem.productId ? [elem.productId, elem.name].join() : elem.name});
         ordering.forEach(item => {
           let product = item.name ? Ordering.findOne({name: item.name}) : "";
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
