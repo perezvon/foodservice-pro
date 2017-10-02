@@ -80,6 +80,7 @@ Template.inventory.helpers({
           let orderHistory = product && product.orderHistory ? product.orderHistory : "";
           let wasOrdered = orderHistory && !_.isEmpty(orderHistory) ? orderHistory.filter(x => x.date >= monthStart && x.date < monthEnd) : "";
           item.qty = +item.qty % 1 > 0 ? parseFloat(item.qty).toFixed(2) : item.qty
+          item.qty = item.qty === undefined ? 0 : item.qty
           //item.orderedThisMonth = item.orderHistory ? item.orderHistory.filter(function(x){return x.date >= monthStart && x.date < monthEnd}).reduce(function(a,b){return a + parseInt(b.qty)}, 0) : ""
           item.orderedThisMonth = wasOrdered && !_.isEmpty(wasOrdered) ? wasOrdered.reduce((a,b) => a + parseInt(b.qty), 0) : "";
         })
