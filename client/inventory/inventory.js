@@ -87,7 +87,7 @@ Template.inventory.helpers({
        if (place) {
            ordering = ordering.filter(a => (a.place === place));
        }
-       $("#inventory tbody").editableTableWidget();
+       console.log(ordering)
        return ordering;
    },
 
