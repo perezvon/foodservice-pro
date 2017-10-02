@@ -87,7 +87,6 @@ Template.inventory.helpers({
        if (place) {
            ordering = ordering.filter(a => (a.place === place));
        }
-       console.log(ordering)
        return ordering;
    },
 
@@ -111,8 +110,10 @@ Template.inventory.events({
 	'click #export': function (e) {
 		e.preventDefault();
     const hasInventory = Template.inventory.__helpers.get('isInventory').call();
+    console.log(hasInventory)
 		let inventoryData = hasInventory ? Template.inventory.__helpers.get('getInventory').call() : Template.inventory.__helpers.get('getMonthlyOrdering').call();
-		Meteor.call('exportToCSV', inventoryData, function (err, res) {
+    console.log(inventoryData)
+    Meteor.call('exportToCSV', inventoryData, function (err, res) {
 					if (err) {
 			Bert.alert(err.reason, 'warning');
 		} else {
