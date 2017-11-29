@@ -61,10 +61,12 @@ Template.inventory.helpers({
          lastMonth = "12";
          lookupYear--;
        }
+       let string = lastMonth.toString()
+       console.log(Inventory.findOne({month: string, year: "2017"}))
        let ordering = Ordering.find({
          orderHistory: {$elemMatch:{date: {$gte: monthStart, $lt: monthEnd}}}
        }).fetch();
-       let stock = Inventory.findOne({month: lastMonth, year: lookupYear});
+       let stock = Inventory.findOne({month: lastMonth, year: lookupYear}) || Inventory.findOne({month: string, year: lookupYear});
        if (stock){
            stock = stock.inventory.filter(obj => parseFloat(obj.qty) > 0);
            ordering = ordering.concat(stock).sort((a, b) => {
@@ -111,9 +113,7 @@ Template.inventory.events({
 	'click #export': function (e) {
 		e.preventDefault();
     const hasInventory = Template.inventory.__helpers.get('isInventory').call();
-    console.log(hasInventory)
 		let inventoryData = hasInventory ? Template.inventory.__helpers.get('getInventory').call() : Template.inventory.__helpers.get('getMonthlyOrdering').call();
-    console.log(inventoryData)
     Meteor.call('exportToCSV', inventoryData, function (err, res) {
 					if (err) {
 			Bert.alert(err.reason, 'warning');
